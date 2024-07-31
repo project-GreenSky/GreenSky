@@ -34,3 +34,9 @@ npm install react-circular-progressbar
 ```sh
 npm run dev
 ```
+
+## Current UI
+
+### Screenshot:
+
+![GreenSky UI](src/assets/GreenSky.png)
