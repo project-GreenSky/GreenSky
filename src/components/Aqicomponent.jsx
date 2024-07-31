@@ -27,7 +27,7 @@ const AQIComponent = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handleInputChange = (e) => {
-    setCity(e.target.value);
+    setCity(e.target.value);  
   };
 
   const handleSubmit = async (e) => {
@@ -67,9 +67,9 @@ const AQIComponent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex">
+    <div className="min-h-screen bg-black-900 text-gray-100 flex">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-800 p-6 flex flex-col justify-between">
+      <div className="w-64 bg-neutral-900 p-6 flex flex-col justify-between">
         <div>
           <h1 className="text-2xl font-bold mb-6">
             Air Quality Index (AQI) Checker
@@ -85,18 +85,18 @@ const AQIComponent = () => {
 
       {/* Main Content */}
       <div className="flex-1 p-10">
-        <div className="bg-gray-800 p-8 rounded-lg shadow-md">
+        <div className="bg-neutral-900 p-8 rounded-lg shadow-md">
           <form onSubmit={handleSubmit} className="flex items-center mb-6">
             <input
               type="text"
               value={city}
               onChange={handleInputChange}
               placeholder="Enter city name"
-              className="flex-1 px-4 py-2 bg-gray-700 rounded-lg border-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 bg-gray-700 rounded-lg border-none focus:ring-2 focus:ring-green-500"
             />
             <button
               type="submit"
-              className="ml-4 px-6 py-2 bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-300"
+              className="ml-4 px-6 py-2 bg-green-500 rounded-lg hover:bg-green-600 transition duration-300"
             >
               Search
             </button>
@@ -172,7 +172,7 @@ const AQIComponent = () => {
                         ))}
                     </div>
                     <button
-                      className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+                      className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
                       onClick={handleNext}
                     >
                       Next
@@ -199,7 +199,7 @@ const AQIComponent = () => {
                       return (
                         <div
                           key={index}
-                          className={`p-6 rounded-lg shadow-lg flex flex-col items-center ${uvColor} text-white`}
+                          className={`p-6 rounded-lg shadow-lg flex flex-col items-center ${uvColor} text-gray-100`}
                         >
                           <p className="text-lg font-bold">{uvi.day}</p>
                           <div className="my-4">
@@ -228,7 +228,7 @@ const AQIComponent = () => {
                         href={attr.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline"
+                        className="text-green-300 hover:underline"
                       >
                         {attr.name}
                       </a>
