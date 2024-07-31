@@ -16,3 +16,30 @@
     font-family: "Inter";
   }
 }
+/* Add this to your global CSS file or within a <style> tag in your component */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.slide-enter {
+  animation: slideIn 0.5s forwards;
+}
+
+.slide-exit {
+  animation: slideOut 0.5s forwards;
+}
+
