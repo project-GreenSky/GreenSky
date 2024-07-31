@@ -4,6 +4,7 @@ export default function App() {
   return (
     <>
       <AQIComponent />
+      <Home />
     </>
   );
 }

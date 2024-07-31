@@ -13,13 +13,13 @@ export default function Footer() {
       <div className="w-full justify-between flex-wrap flex p-4 my-4 md:w-10/12 mx-auto gap-4">
         <a href="" className="flex gap-3 items-center">
           <img src={icon} alt="icon" className="w-8 h-8" />
-          <p className="text-2xl text-green-600 font-bold font-Playwrite">
+          <p className="text-2xl text-green-500 font-bold font-Playwrite">
             GreenSky
           </p>
         </a>
         <div className="flex flex-wrap grow justify-evenly gap-5">
           <div>
-            <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-800 pr-5">
+            <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-500 pr-5">
               Heading 1
             </div>
             <ul className="flex flex-row gap-3 md:flex-col md:gap-0">
@@ -41,7 +41,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-800 pr-5">
+            <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-500 pr-5">
               Heading 2
             </div>
             <ul className="flex flex-row gap-3 md:flex-col md:gap-0">
@@ -60,7 +60,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-col items-start gap-5">
           <div>
-            <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-800 pr-5">
+            <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-500 pr-5">
               Newsletter
             </div>
             <div className="flex gap-2">
@@ -72,13 +72,13 @@ export default function Footer() {
                   placeholder="john.doe@xyz.com"
                 />
               </label>
-              <button className="btn btn-sm rounded btn-success">
+              <button className="btn btn-sm bg-green-500 rounded hover:bg-green-600 text-black">
                 subscribe
               </button>
             </div>
           </div>
           <div>
-            <div className="w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-800 pr-5">
+            <div className="w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-500 pr-5">
               Follow Us
             </div>
             <div className="flex gap-2">
