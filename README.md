@@ -22,7 +22,14 @@ cd my-react-app
 npm install
 ```
 
-### 3. Run the Project:
+### 3. Extra modules:
+
+```sh
+npm install daisyui
+npm install react-circular-progressbar
+```
+
+### 4. Run the Project:
 
 ```sh
 npm run dev
