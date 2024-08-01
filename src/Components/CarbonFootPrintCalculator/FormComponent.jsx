@@ -28,9 +28,16 @@ const FormComponent = ({ title, fields, onSubmit }) => {
                 value={formState[field.name]}
                 onChange={handleChange}
                 placeholder={`Enter ${field.label.toLowerCase()}`}
+                className="form-input"
               />
             ) : (
-              <select id={field.name} name={field.name} value={formState[field.name]} onChange={handleChange}>
+              <select
+                id={field.name}
+                name={field.name}
+                value={formState[field.name]}
+                onChange={handleChange}
+                className="form-select"
+              >
                 <option value="" disabled>Select {field.label.toLowerCase()}</option>
                 {field.options.map((option) => (
                   <option key={option} value={option}>{option}</option>
