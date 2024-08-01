@@ -1,0 +1,115 @@
+.calculator-container {
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .tabs-container {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .tabs-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .form-component {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.2s;
+  }
+  
+  .form-component:hover {
+    transform: scale(1.02);
+  }
+  
+  h2 {
+    color: #2e7d32;
+    text-align: center;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-weight: bold;
+    color: #1b5e20;
+  }
+  
+  .input-group input,
+  .input-group select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #c8e6c9;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .input-group input:focus,
+  .input-group select:focus {
+    border-color: #81c784;
+    box-shadow: 0 0 5px rgba(129, 199, 132, 0.5);
+  }
+  
+  .carbon-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3ea543;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .carbon-button:hover {
+    background-color: #2e7d32;
+    transform: scale(1.02);
+  }
+  
+  .result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.5em;
+    color: #388e3c;
+  }
+  
+  .converter {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1f8e9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .error {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .tabs-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
