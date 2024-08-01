@@ -1,14 +1,13 @@
-import React from 'react';
+import Home from "./pages/Home";
 import CarbonFootprintCalculator from './Components/CarbonFootPrintCalculator/CarbonFootPrintCalculator.jsx';
+import AQIComponent from "./components/Aqicomponent";
 
-const App = () => {
+export default function App() {
   return (
-    <div className="App">
-      <h1>Carbon Footprint Calculator</h1>
-      {/* <h2>{process.env.REACT_APP_CARBON_KEY}</h2> */}
+    <>
+      <AQIComponent />
       <CarbonFootprintCalculator />
-    </div>
+      <Home />
+    </>
   );
-};
-
-export default App;
+}

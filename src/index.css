@@ -1,3 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Playwrite ES Deco";
+    font-style: normal;
+    font-weight: 100 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/playwriteesdeco/v4/7Aulp-g3kjKKGkePXEf2jxctfDxlvHk1.woff2)
+      format("woff2");
+  }
+
+  html {
+    font-family: "Inter";
+  }
+}
+/* Add this to your global CSS file or within a <style> tag in your component */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.slide-enter {
+  animation: slideIn 0.5s forwards;
+}
+
+.slide-exit {
+  animation: slideOut 0.5s forwards;
+}
+
