@@ -11,24 +11,19 @@ const CarbonFootprintCalculator = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  console.log('API Key:', apiKey); // Debugging
-
-  const handleCalculate = async (url, params) => {
+  const handleCalculate = async (endpoint, params) => {
     setLoading(true);
     setError(null); // Reset error state before making the request
     try {
-      const response = await axios.get(url, {
+      const response = await axios.get(endpoint, {
         params,
         headers: {
-          'x-rapidapi-host': apiUrl,
+          'x-rapidapi-host': new URL(apiUrl).host,
           'x-rapidapi-key': apiKey,
         },
       });
-      console.log('API Response:', response.data); // Debugging
-      console.log('Carbon Equivalent:', response.data.carbonEquivalent); // Check the value
       setResult(response.data.carbonEquivalent); // Correctly set the result
     } catch (error) {
-      console.error('Error calculating carbon footprint:', error.response ? error.response.data : error.message);
       setError(error.response ? error.response.data.message : 'An unexpected error occurred.');
     } finally {
       setLoading(false);
@@ -58,13 +53,13 @@ const CarbonFootprintCalculator = () => {
           <FormComponent
             title="Car Travel"
             fields={[
-              { name: 'distance', label: 'Distance (KM)', type: 'number' },
               { name: 'vehicle', label: 'Vehicle Type', options: [
                 'SmallDieselCar', 'MediumDieselCar', 'LargeDieselCar', 'MediumHybridCar', 'LargeHybridCar', 
                 'MediumLPGCar', 'LargeLPGCar', 'MediumCNGCar', 'LargeCNGCar', 'SmallPetrolVan', 'LargePetrolVan', 
                 'SmallDieselVan', 'MediumDieselVan', 'LargeDieselVan', 'LPGVan', 'CNGVan', 
                 'SmallPetrolCar', 'MediumPetrolCar', 'LargePetrolCar', 'SmallMotorBike', 'MediumMotorBike', 'LargeMotorBike'
               ]},
+              { name: 'distance', label: 'Distance (KM)', type: 'number' },
             ]}
             onSubmit={(fields) => handleCalculate('https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromCarTravel', fields)}
           />
@@ -73,11 +68,11 @@ const CarbonFootprintCalculator = () => {
           <FormComponent
             title="Flight Travel"
             fields={[
-              { name: 'distance', label: 'Distance (KM)', type: 'number' },
               { name: 'type', label: 'Flight Type', options: [
                 'DomesticFlight', 'ShortEconomyClassFlight', 'ShortBusinessClassFlight', 'LongEconomyClassFlight',
                 'LongPremiumClassFlight', 'LongBusinessClassFlight', 'LongFirstClassFlight'
               ]},
+              { name: 'distance', label: 'Distance (KM)', type: 'number' },
             ]}
             onSubmit={(fields) => handleCalculate('https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromFlight', fields)}
           />
@@ -92,12 +87,12 @@ const CarbonFootprintCalculator = () => {
           <FormComponent
             title="Public Transport"
             fields={[
-              { name: 'distance', label: 'Distance (KM)', type: 'number' },
               { name: 'type', label: 'Transport Type', options: [
                 'Taxi', 'ClassicBus', 'EcoBus', 'Coach', 'NationalTrain', 'LightRail', 'Subway', 'FerryOnFoot', 'FerryInCar'
               ]},
+              { name: 'distance', label: 'Distance (KM)', type: 'number' },
             ]}
-            onSubmit={(fields) => handleCalculate('https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromPublicTransport', fields)}
+            onSubmit={(fields) => handleCalculate('https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromPublicTransit', fields)}
           />
         </div>
       </div>
