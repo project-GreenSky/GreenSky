@@ -1,6 +1,6 @@
 import Home from "./pages/Home";
-import CarbonFootprintCalculator from './temp/CarbonFootPrintCalculator/CarbonFootPrintCalculator';
-import AQIComponent from "./temp/Aqicomponent";
+import CarbonFootprintCalculator from './components/CarbonFootPrintCalculator/CarbonFootPrintCalculator';
+import AQIComponent from "./components/Aqicomponent";
 
 export default function App() {
   return (
