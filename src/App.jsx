@@ -3,7 +3,7 @@ import AQIComponent from "./components/Aqicomponent";
 export default function App() {
   return (
     <>
-      <AQIComponent />
+      <AQIComponent /> 
       <Home />
     </>
   );
