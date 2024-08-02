@@ -37,7 +37,7 @@ export default function Navbar() {
                             <a href="#" className="block py-2 px-3  rounded  hover:bg-green-200 hover:bg-opacity-10 md:hover:bg-transparent md:border-0 md:hover:text-green-500 md:p-0 text-white">Services</a>
                         </li>
                         <li>
-                            <a href="#" className="block py-2 px-3  rounded  hover:bg-green-200 hover:bg-opacity-10 md:hover:bg-transparent md:border-0 md:hover:text-green-500 md:p-0 text-white">Pricing</a>
+                            <a href="#" className="block py-2 px-3  rounded  hover:bg-green-200 hover:bg-opacity-10 md:hover:bg-transparent md:border-0 md:hover:text-green-500 md:p-0 text-white">Blog</a>
                         </li>
                         <li>
                             <a href="#" className="block py-2 px-3  rounded  hover:bg-green-200 hover:bg-opacity-10 md:hover:bg-transparent md:border-0 md:hover:text-green-500 md:p-0 text-white">Contact</a>
