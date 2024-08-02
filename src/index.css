@@ -1,45 +1,13 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer base {
-  @font-face {
-    font-family: "Playwrite ES Deco";
-    font-style: normal;
-    font-weight: 100 400;
-    font-display: swap;
-    src: url(https://fonts.gstatic.com/s/playwriteesdeco/v4/7Aulp-g3kjKKGkePXEf2jxctfDxlvHk1.woff2)
-      format("woff2");
-  }
-
-  html {
-    font-family: "Inter";
+  :root {
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 }
-/* Add this to your global CSS file or within a <style> tag in your component */
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideOut {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-.slide-enter {
-  animation: slideIn 0.5s forwards;
-}
-
-.slide-exit {
-  animation: slideOut 0.5s forwards;
-}
-
