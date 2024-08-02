@@ -52,5 +52,6 @@ module.exports = {
       },
     },
   },
+  safelist: [{pattern: /^bg-(green|yellow|orange|red|purple|maroon)-500$/}],
   plugins: [require("daisyui"), require("tailwindcss-animate")],
 };

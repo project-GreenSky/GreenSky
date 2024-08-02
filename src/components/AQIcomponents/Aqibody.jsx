@@ -1,34 +1,31 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "tailwindcss/tailwind.css";
-import wind from "../../assets/wind.png";
-import protect from "../../assets/protect.png";
-import rain from "../../assets/rainy.png";
-import thermometer from "../../assets/thermometer.png";
-import pm25 from "../../assets/pm25.png";
-import pm10 from "../../assets/pm10.png";
-import ozone from "../../assets/ozone.png";
-import monoxide from "../../assets/monoxide.png";
+import wind from "../../assets/wind.svg";
+import protect from "../../assets/protect.svg";
+import rain from "../../assets/rainy.svg";
+import thermometer from "../../assets/thermometer.svg";
+import pm25 from "../../assets/pm25.svg";
+import pm10 from "../../assets/pm10.svg";
+import ozone from "../../assets/ozone.svg";
+import monoxide from "../../assets/monoxide.svg";
 import ForecastComponent from "./forcastcomponent";
 import Dataattribution from "./dataAttribution";
+import { getAQIBracket } from "@/lib/utils";
 
-const fetchAQIData = async (city) => {
-  const response = await fetch(
-    `https://api.waqi.info/feed/${city}/?token=6fccb080951117599b9e5ee094b857a52e3a9415`
-  );
+const WAQI_KEY = import.meta.env.VITE_WAQI_KEY;
 
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-
-  const data = await response.json();
-  if (data.status !== "ok") {
-    throw new Error(data.data);
-  }
-
-  return data.data;
-};
+const fetchAQIData = async (city) =>
+  axios
+    .get(`https://api.waqi.info/feed/${city}/?token=${WAQI_KEY}`)
+    .then((res) => {
+      let data = res.data;
+      if (data.status === "error") return Promise.reject(data.message);
+      return Promise.resolve(data.data);
+    })
+    .catch((err) => Promise.reject(err?.response?.message || "Network Error"));
 
 export default function Aqibody() {
   const [city, setCity] = useState("");
@@ -50,55 +47,6 @@ export default function Aqibody() {
     } catch (err) {
       setError(err.message || "Failed to fetch AQI data. Please try again.");
       setAQIData(null);
-    }
-  };
-
-  const getColorForAQI = (aqi) => {
-    if (aqi <= 50) return "#55a84f"; // Good - Green
-    if (aqi <= 100) return "#a3c853"; // Moderate - Yellow
-    if (aqi <= 150) return "#fff833"; // Unhealthy for Sensitive Groups - Orange
-    if (aqi <= 200) return "#f29c33"; // Unhealthy - Red
-    if (aqi <= 300) return "#e93f33"; // Very Unhealthy - Purple
-    return "#af2d24"; // Hazardous - Maroon
-  };
-
-  const getBackgroundColor = (aqi) => {
-    if (aqi >= 0 && aqi <= 50) return "green";
-    if (aqi >= 51 && aqi <= 100) return "yellow";
-    if (aqi >= 101 && aqi <= 150) return "orange";
-    if (aqi >= 151 && aqi <= 200) return "red";
-    if (aqi >= 201 && aqi <= 300) return "purple";
-    if (aqi >= 301 && aqi <= 500) return "maroon";
-  };
-
-  const getAQImessage = (aqi) => {
-    if (aqi >= 0 && aqi <= 50)
-      return "Air quality is satisfactory also air pollution poses little or no risk!";
-    if (aqi >= 51 && aqi <= 100)
-      return "Air quality is acceptable, small concern to air sensitive people";
-    if (aqi >= 101 && aqi <= 150)
-      return "People with respiratory or heart conditions, children, and older adults may experience health effects";
-    if (aqi >= 151 && aqi <= 200)
-      return "Everyone may begin to experience health effects including non-sensitive ones.";
-    if (aqi >= 201 && aqi <= 300)
-      return "Health alert: everyone may experience more serious health effects!!";
-    if (aqi >= 301 && aqi <= 500)
-      return "Health warnings of emergency conditions. The entire population is more likely to be affected!!";
-  };
-
-  const getAQICondition = (aqi) => {
-    if (aqi >= 0 && aqi <= 50) {
-      return "Good";
-    } else if (aqi >= 51 && aqi <= 100) {
-      return "Moderate";
-    } else if (aqi >= 101 && aqi <= 150) {
-      return "Unhealthy for Sensitive Groups";
-    } else if (aqi >= 151 && aqi <= 200) {
-      return "Unhealthy";
-    } else if (aqi >= 201 && aqi <= 300) {
-      return "Very Unhealthy";
-    } else if (aqi >= 301 && aqi <= 500) {
-      return "Hazardous";
     }
   };
 
@@ -160,16 +108,16 @@ export default function Aqibody() {
                   </h2>
                   {/* aqimessage */}
                   <div
-                    className={`w-full md:w-1/2 lg:w-1/3 h-30 bg-${getBackgroundColor(
-                      aqiData.aqi
-                    )}-500 rounded-lg text-center mb-4 md:mb-0`}
+                    className={`w-full md:w-1/2 lg:w-1/3 h-30 bg-${
+                      getAQIBracket(aqiData.aqi).bg
+                    }-500 rounded-lg text-center mb-4 md:mb-0`}
                   >
                     <div className="p-2 md:p-4">
                       <p className="font-bold text-lg md:text-xl lg:text-2xl text-gray-100">
-                        {getAQICondition(aqiData.aqi)}
+                        {getAQIBracket(aqiData.aqi).condition}
                       </p>
                       <div className="text-sm md:text-base lg:text-lg">
-                        {getAQImessage(aqiData.aqi)}
+                        {getAQIBracket(aqiData.aqi).message}
                       </div>
                     </div>
                   </div>
@@ -182,7 +130,7 @@ export default function Aqibody() {
                         text={`${aqiData.aqi}`}
                         styles={buildStyles({
                           textColor: "#fff",
-                          pathColor: getColorForAQI(aqiData.aqi),
+                          pathColor: getAQIBracket(aqiData.aqi).color,
                           trailColor: "#555",
                         })}
                       />
