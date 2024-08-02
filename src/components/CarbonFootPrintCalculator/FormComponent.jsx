@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { toSpacedCase } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
-const FormComponent = ({ title, fields, onSubmit }) => {
-  const [formState, setFormState] = useState(fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {}));
+const FormComponent = ({ title, fields, onSubmit, loading }) => {
+  const [formState, setFormState] = useState(
+    fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,39 +25,49 @@ const FormComponent = ({ title, fields, onSubmit }) => {
   };
 
   return (
-    <div className="form-component">
+    <div className="min-w-[300px] max-w-[400px] grow animate-bounce-in">
       <h2>{title}</h2>
       <form onSubmit={handleSubmit}>
         {fields.map((field) => (
           <div className="input-group" key={field.name}>
             <label htmlFor={field.name}>{field.label}</label>
-            {field.type === 'number' ? (
-              <input
+            {field.type === "number" ? (
+              <Input
                 type="number"
                 id={field.name}
                 name={field.name}
                 value={formState[field.name]}
                 onChange={handleChange}
                 placeholder={`Enter ${field.label.toLowerCase()}`}
-                className="form-input"
+                className="bg-base-100"
               />
             ) : (
-              <select
-                id={field.name}
+              <Select
                 name={field.name}
                 value={formState[field.name]}
-                onChange={handleChange}
-                className="form-select"
+                onValueChange={(value) =>
+                  handleChange({ target: { name: field.name, value } })
+                }          
               >
-                <option value="" disabled>Select {field.label.toLowerCase()}</option>
-                {field.options.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
+                <SelectTrigger className="my-2">
+                  <SelectValue
+                    placeholder={`Select ${field.label.toLowerCase()}`}
+                  />
+                  <SelectContent>
+                    {field.options.map((option) => (
+                      <SelectItem key={option} value={option}>
+                        {toSpacedCase(option)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </SelectTrigger>
+              </Select>
             )}
           </div>
         ))}
-        <button className="carbon-button" type="submit">Calculate</button>
+        <button className="carbon-button" type="submit" disabled={loading}>
+          {loading ? <div className="loading loading-spinner loading-sm text-neutral-200"></div>: "Calculate"}
+        </button>
       </form>
     </div>
   );
