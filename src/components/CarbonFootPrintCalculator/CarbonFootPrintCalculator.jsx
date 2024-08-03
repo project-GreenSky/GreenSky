@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/select";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { FaInfo } from "react-icons/fa6";
-import bus from "@/assets/bus.svg";
-import car from "@/assets/car.svg";
-import motorbike from "@/assets/motorbike.svg";
-import flight from "@/assets/flight.svg";
-import fuel from "@/assets/fuel.svg";
-import clean from "@/assets/clean.svg";
+import bus from "../../assets/bus.svg";
+import car from "../../assets/car.svg";
+import motorbike from "../../assets/motorbike.svg";
+import flight from "../../assets/flight.svg";
+import fuel from "../../assets/fuel.svg";
+import clean from "../../assets/clean.svg";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const apiUrl = import.meta.env.VITE_API_URL;
