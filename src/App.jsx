@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Blog from "./pages/Blog";
+import Home from "./pages/Home";
+import ContactUs from "./pages/ContactUs";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Blog from "./pages/Blog";
-import Home from "./pages/Home";
-import { useState } from "react";
 
 import notfound from "./assets/not-found.svg";
 
@@ -16,10 +18,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/contact" element={<ContactUs />} />
 
         {/* Under development */}
         <Route path="/about" element={<InProgress />} />
-        <Route path="/contact" element={<InProgress />} />
         <Route path="/services" element={<InProgress />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
