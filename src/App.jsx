@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 import CarbonFootprintCalculator from "./components/CarbonFootPrintCalculator/CarbonFootPrintCalculator";
 import Aqibody from "./components/AQIcomponents/Aqibody";
 import Blog from "./pages/Blog";
+import Contactuspage from "./components/Contactuspage";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Blog />
       <Aqibody />
       <CarbonFootprintCalculator />
+      <Contactuspage />
       <Footer />
     </>
   );
