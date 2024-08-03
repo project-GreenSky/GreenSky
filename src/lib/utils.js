@@ -1,13 +1,14 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import bus from "@/assets/bus.svg";
-import car from "@/assets/car.svg";
-import motorbike from "@/assets/motorbike.svg";
-import flight from "@/assets/flight.svg";
-import fuel from "@/assets/fuel.svg";
-import clean from "@/assets/clean.svg";
+import bus from "../assets/bus.svg";
+import car from "../assets/car.svg";
+import motorbike from "../assets/motorbike.svg";
+import flight from "../assets/flight.svg";
+import fuel from "../assets/fuel.svg";
+import clean from "../assets/clean.svg";
 
+console.log(clean)
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
