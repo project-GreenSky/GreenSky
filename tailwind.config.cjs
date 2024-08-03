@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
+  darkMode: ["class", "[data-theme='dark-forest']"],
   content: [
     "./pages/**/*.{js,jsx}",
     "./components/**/*.{js,jsx}",
@@ -19,6 +19,14 @@ module.exports = {
       fontFamily: {
         Playwrite: ["'Playwrite ES Deco'"],
       },
+      width: {
+        84: "21rem",
+        88: "22rem",
+        92: "23rem",
+        100: "25rem",
+        112: "28rem",
+        120: "30rem",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -32,16 +40,13 @@ module.exports = {
           "0%": {
             transform: "translateY(-25%)",
             opacity: 0,
-            // "animation-timing-function": "cubic-bezier(0.8, 0, 1, 1)",
           },
           "50%": {
             transform: "translateY(15%)",
             opacity: 1,
-            // "animation-timing-function": "cubic-bezier(0, 0, 0.2, 1)",
           },
           "100%": {
             transform: "translateY(0)",
-            // "animation-timing-function": "cubic-bezier(0, 0, 0.2, 1)",
           },
         },
       },
@@ -52,6 +57,25 @@ module.exports = {
       },
     },
   },
-  safelist: [{pattern: /^bg-(green|yellow|orange|red|purple|maroon)-500$/}],
+  safelist: [
+    {
+      pattern: /^(bg|border|text)-(green|yellow|orange|red|purple|maroon)-.00$/,
+    },
+  ],
+  daisyui: {
+    themes: [
+      {
+        "dark-forest": {
+          primary: "#2e7d32",
+          secondary: "#1B4242",
+          accent: "#1A3636",
+          neutral: "#777",
+          "base-100": "#0f0f0f",
+          "base-200": "#151515",
+          "base-300": "#000",
+        },
+      },
+    ],
+  },
   plugins: [require("daisyui"), require("tailwindcss-animate")],
 };

@@ -59,7 +59,7 @@ const CarbonFootprintCalculator = () => {
         backgroundSize: 200,
         backgroundPosition: "2% 100%",
       }}
-      className="w-full duration-300 lg:w-5/6 mx-auto lg:my-3 p-10 gap-10 shadow-neutral lg:rounded-xl shadow-lg flex flex-col"
+      className="w-full duration-300 lg:w-3/4 mx-auto lg:my-5 p-10 gap-10 lg:rounded-xl bg-base-200 shadow-lg flex flex-col"
     >
       <div className="flex flex-wrap justify-around">
         <div className="flex flex-col justify-center gap-12 overflow-hidden">
@@ -75,7 +75,7 @@ const CarbonFootprintCalculator = () => {
               setResult(null);
             }}
           >
-            <SelectTrigger className="max-w-[250px] mx-auto my-2 bg-base-100">
+            <SelectTrigger className="max-w-[250px] mx-auto my-2 bg-base-200">
               <SelectValue placeholder={calculators[0].title} />
             </SelectTrigger>
             <SelectContent>

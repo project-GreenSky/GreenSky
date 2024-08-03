@@ -1,123 +1,66 @@
-import React, { useState } from "react";
+import React from "react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+} from "@/components/ui/chart";
+import moment from "moment";
 
-const ForecastComponent = ({ aqiData }) => {
-  // PM2.5 Forecast State
-  const [isAnimatingPM25, setIsAnimatingPM25] = useState(false);
-  const [currentPagePM25, setCurrentPagePM25] = useState(0);
-  const [isPM25Visible, setIsPM25Visible] = useState(true);
+const chartConfig = {
+  avg: {
+    label: "Average",
+  },
+  min: {
+    label: "Minimum",
+  },
+  max: {
+    label: "Maximum",
+  },
+};
 
-  // UV Index Forecast State
-  const [isAnimatingUVI, setIsAnimatingUVI] = useState(false);
-  const [currentPageUVI, setCurrentPageUVI] = useState(0);
-  const [isUVIVisible, setIsUVIVisible] = useState(true);
-
-  const handleNextPM25 = () => {
-    setIsAnimatingPM25(true);
-    setTimeout(() => {
-      if ((currentPagePM25 + 1) * 4 >= aqiData.forecast.daily.pm25.length) {
-        setIsPM25Visible(false);
-        setCurrentPagePM25(0); // Reset to the beginning
-        setTimeout(() => setIsPM25Visible(true), 1000); // Show again after hiding
-      } else {
-        setCurrentPagePM25((prevPage) => prevPage + 1);
-      }
-      setIsAnimatingPM25(false);
-    }, 500);
-  };
-
-  const handleNextUVI = () => {
-    setIsAnimatingUVI(true);
-    setTimeout(() => {
-      if ((currentPageUVI + 1) * 4 >= aqiData.forecast.daily.uvi.length) {
-        setIsUVIVisible(false);
-        setCurrentPageUVI(0); // Reset to the beginning
-        setTimeout(() => setIsUVIVisible(true), 1000); // Show again after hiding
-      } else {
-        setCurrentPageUVI((prevPage) => prevPage + 1);
-      }
-      setIsAnimatingUVI(false);
-    }, 500);
-  };
+const ForecastComponent = ({ forecast }) => {
 
   return (
-    <div>
-      {/* PM 2.5 FORECAST */}
-      {aqiData.forecast && aqiData.forecast.daily.pm25 && isPM25Visible && (
-        <div className="mt-6">
-          <h3 className="text-xl mb-4 font-bold">PM2.5 Forecast</h3>
-          <div className="relative overflow-hidden">
-            <div
-              className={`grid grid-cols-4 gap-4 transition-all duration-500 ${
-                isAnimatingPM25 ? "slide-exit" : "slide-enter"
-              }`}
-            >
-              {aqiData.forecast.daily.pm25
-                .slice(currentPagePM25 * 4, currentPagePM25 * 4 + 4)
-                .map((forecast, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-700 p-4 rounded-lg shadow-inner"
-                  >
-                    <p className="text-lg font-bold">{forecast.day}</p>
-                    <p className="text-gray-400">Avg: {forecast.avg} µg/m³</p>
-                    <p className="text-gray-400">Max: {forecast.max} µg/m³</p>
-                    <p className="text-gray-400">Min: {forecast.min} µg/m³</p>
-                  </div>
-                ))}
-            </div>
-            <button
-              className="text-black font-bold absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 mr-2"
-              onClick={handleNextPM25}
-            >
-              Next
-            </button>
+    <>
+      {Object.entries(forecast?.daily || {}).map(([key, value]) => (
+        <div
+          key={key}
+          className="rounded-xl w-full p-10 my-5 shadow-lg bg-base-200"
+        >
+          <div className="text-2xl font-semibold mb-5 border-s-4 p-2 text-green-500 border-green-500">
+            {(key === "pm25" ? "pm2.5" : key).toUpperCase()} Forecast
           </div>
+          <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+            <LineChart accessibilityLayer data={value}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="day"
+                tickMargin={10}
+                tickFormatter={(value) =>
+                  moment(value).calendar({
+                    sameDay: "[Today]",
+                    nextDay: "[Tomorrow]",
+                    nextWeek: "ddd, DD",
+                    lastDay: "[Yesterday]",
+                    lastWeek: "[Last] dddd",
+                    sameElse: "DD/MM/YYYY",
+                  })
+                }
+              />
+              <YAxis domain={["dataMin", "dataMax + 2"]} tickCount={10} />
+              <Line dataKey="min" stroke="#ff0" type="monotone" />
+              <Line dataKey="avg" stroke="#f0f" type="monotone" />
+              <Line dataKey="max" stroke="#0ff" type="monotone" />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <ChartLegend content={<ChartLegendContent />} />
+            </LineChart>
+          </ChartContainer>
         </div>
-      )}
-
-      {/* UV INDEX FORECAST */}
-      {aqiData.forecast && aqiData.forecast.daily.uvi && isUVIVisible && (
-        <div className="mt-6">
-          <h3 className="text-xl mb-4 font-bold">UV Index Forecast</h3>
-          <div className="relative overflow-hidden">
-            <div
-              className={`grid grid-cols-4 gap-4 transition-all duration-500 ${
-                isAnimatingUVI ? "slide-exit" : "slide-enter"
-              }`}
-            >
-              {aqiData.forecast.daily.uvi
-                .slice(currentPageUVI * 4, currentPageUVI * 4 + 4)
-                .map((uvi, index) => {
-                  let uvColor;
-                  if (uvi.avg <= 2) uvColor = "bg-gray-700";
-                  else if (uvi.avg <= 5) uvColor = "bg-yellow-500";
-                  else if (uvi.avg <= 7) uvColor = "bg-orange-500";
-                  else if (uvi.avg <= 10) uvColor = "bg-red-500";
-                  else uvColor = "bg-purple-700";
-
-                  return (
-                    <div
-                      key={index}
-                      className={`p-4 rounded-lg shadow-inner bg-gray-700 text-gray-100`}
-                    >
-                      <p className="text-lg font-bold">{uvi.day}</p>
-                      <p className="text-gray-400">Avg: {uvi.avg}</p>
-                      <p className="text-gray-400">Max: {uvi.max}</p>
-                      <p className="text-gray-400">Min: {uvi.min}</p>
-                    </div>
-                  );
-                })}
-            </div>
-            <button
-              className="text-black font-bold absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 mr-2"
-              onClick={handleNextUVI}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+      ))}
+    </>
   );
 };
 

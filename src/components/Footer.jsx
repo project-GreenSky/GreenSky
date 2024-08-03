@@ -9,7 +9,7 @@ import icon from "../assets/icon.png";
 
 export default function Footer() {
   return (
-    <footer className="w-dvw bg-neutral-900 text-neutral-400">
+    <footer className="bg-base-300 text-neutral-400">
       <div className="w-full justify-between flex-wrap flex p-4 my-4 md:w-10/12 mx-auto gap-4">
         <a href="" className="flex gap-3 items-center">
           <img src={icon} alt="icon" className="w-8 h-8" />
@@ -110,7 +110,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="bg-black">
+      <div className="bg-base-100">
         <div className="flex flex-col md:flex-row gap-2 w-full py-4 md:w-10/12 mx-auto justify-between items-center">
           <div className="flex gap-4">
             <a href="" className="hover:text-neutral-200 duration-300">

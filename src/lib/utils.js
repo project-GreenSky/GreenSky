@@ -211,5 +211,5 @@ export function getAQIBracket(aqi) {
   if (aqi >= 101 && aqi <= 150) return AQI.UNHEALTHY_SENSITIVE;
   if (aqi >= 151 && aqi <= 200) return AQI.UNHEALTHY;
   if (aqi >= 201 && aqi <= 300) return AQI.VERY_UNHEALTHY;
-  if (aqi >= 301 && aqi <= 500) return AQI.HAZARDOUS;
+  return AQI.HAZARDOUS;
 }
