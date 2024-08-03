@@ -1,8 +1,13 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Aqibody from "@/components/AQIcomponents/Aqibody";
+import CarbonFootprintCalculator from "@/components/CarbonFootPrintCalculator/CarbonFootPrintCalculator";
+import Facts from "@/components/Facts";
+
 export default function Home() {
-  return <>
-     <Navbar />
-     <Footer />
-  </>
+  return (
+    <>
+      <Aqibody />
+      <CarbonFootprintCalculator />
+      <Facts />
+    </>
+  );
 }
