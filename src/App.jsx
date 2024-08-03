@@ -10,9 +10,8 @@ import notfound from "./assets/not-found.svg";
 
 export default function App() {
   const [page, setPage] = useState("home");
-
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.VITE_REPO}>
       <Navbar pageState={[page, setPage]} />
       <Routes>
         <Route path="/" element={<Home />} />
