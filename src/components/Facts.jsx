@@ -44,7 +44,7 @@ function Facts() {
       <Slider {...settings}>
         {facts.map((fact, index) => (
           <div key={index} className="p-4">
-            <div className="bg-slate-50 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+            <div className="bg-base-200 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
               <img
                 src={fact.img}
                 alt={fact.title}

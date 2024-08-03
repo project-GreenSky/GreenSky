@@ -6,6 +6,7 @@ import {
   FaTwitter,
 } from "react-icons/fa6";
 import icon from "../assets/icon.png";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -20,40 +21,52 @@ export default function Footer() {
         <div className="flex flex-wrap grow justify-evenly gap-5">
           <div>
             <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-500 pr-5">
-              Heading 1
+              GreenSky
             </div>
             <ul className="flex flex-row gap-3 md:flex-col md:gap-0">
               <li>
-                <a href="" className="hover:text-neutral-200 duration-300">
-                  link
-                </a>
+                <Link to="/" className="hover:text-neutral-200 duration-300">
+                  Home
+                </Link>
               </li>
               <li>
-                <a href="" className="hover:text-neutral-200 duration-300">
-                  link
-                </a>
+                <Link
+                  to="/about"
+                  className="hover:text-neutral-200 duration-300"
+                >
+                  About
+                </Link>
               </li>
               <li>
-                <a href="" className="hover:text-neutral-200 duration-300">
-                  link
-                </a>
+                <Link
+                  to="/contact"
+                  className="hover:text-neutral-200 duration-300"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
           <div>
             <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-500 pr-5">
-              Heading 2
+              More
             </div>
             <ul className="flex flex-row gap-3 md:flex-col md:gap-0">
               <li>
-                <a href="" className="hover:text-neutral-200 duration-300">
-                  link
-                </a>
+                <Link
+                  to="/blog"
+                  className="hover:text-neutral-200 duration-300"
+                >
+                  Blogs
+                </Link>
               </li>
               <li>
-                <a href="" className="hover:text-neutral-200 duration-300">
-                  link
-                </a>
+                <Link
+                  to="/services"
+                  className="hover:text-neutral-200 duration-300"
+                >
+                  Services
+                </Link>
               </li>
             </ul>
           </div>
@@ -84,25 +97,25 @@ export default function Footer() {
             <div className="flex gap-2">
               <a
                 href=""
-                className="rounded-full text-xl hover:bg-white/15 duration-200 p-1"
+                className="rounded-full text-xl hover:bg-white/15 hover:text-gray-200 duration-200 p-1"
               >
                 <FaFacebook />
               </a>
               <a
                 href=""
-                className="rounded-full text-xl hover:bg-white/15 duration-200 p-1"
+                className="rounded-full text-xl hover:bg-white/15 hover:text-gray-200 duration-200 p-1"
               >
                 <FaInstagram />
               </a>
               <a
                 href=""
-                className="rounded-full text-xl hover:bg-white/15 duration-200 p-1"
+                className="rounded-full text-xl hover:bg-white/15 hover:text-gray-200 duration-200 p-1"
               >
                 <FaTwitter />
               </a>
               <a
                 href=""
-                className="rounded-full text-xl hover:bg-white/15 duration-200 p-1"
+                className="rounded-full text-xl hover:bg-white/15 hover:text-gray-200 duration-200 p-1"
               >
                 <FaGithub />
               </a>
