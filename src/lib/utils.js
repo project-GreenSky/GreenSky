@@ -213,3 +213,78 @@ export function getAQIBracket(aqi) {
   if (aqi >= 201 && aqi <= 300) return AQI.VERY_UNHEALTHY;
   return AQI.HAZARDOUS;
 }
+export const facts = [
+  {
+    title: "Ozone Layer Depletion",
+    description: "The ozone layer is thinning, which increases UV radiation reaching the Earth's surface.",
+    name: "UNEP, WMO",
+      img: "https://bmkltsly13vb.compat.objectstorage.ap-mumbai-1.oraclecloud.com/cdn.dailymirror.lk/media/images/Editorial-17.jpg"
+  },
+  {
+    title: "PM2.5 and Health Risks",
+    description: "PM2.5 particles can penetrate deep into the lungs and even enter the bloodstream, posing serious health risks.",
+    name: "World Health Organization",
+    img: "https://media.istockphoto.com/id/1144913995/vector/many-peoples-wearing-air-pollution-mask-for-protect-dust-pm2-5-pm10-smoke-smog.jpg?s=612x612&w=0&k=20&c=0vZ7Ji8sIb4FF92WeroHSKSyNGwYvCXLdUDwTB259AU=" 
+  },
+  {
+    title: "PM10 and Respiratory Issues",
+    description: "Exposure to PM10 particles can cause respiratory issues, especially in children and the elderly.",
+    name: "Environmental Protection Agency",
+    img: "https://thumbs.dreamstime.com/z/respiratory-environment-health-breath-organism-girl-boy-wearing-air-pollution-mask-protect-dust-pm-smoke-smog-145811104.jpg"
+  },
+  {
+    title: "Air Quality in Urban Areas",
+    description: "Urban areas often experience poor air quality due to high vehicle emissions and industrial activities.",
+    name: "World Health Organization",
+    img: "https://www.shutterstock.com/image-vector/cars-air-pollution-polluted-environment-600nw-1769819111.jpg" 
+  },
+  {
+    title: "Ozone Pollution",
+    description: "Ground-level ozone can cause respiratory problems and aggravate conditions like asthma.",
+    name: "Environmental Protection Agency",
+    img: "https://media.gettyimages.com/id/526654138/video/cartoon-earth-globe-polluted-by-smoke-from-tubes.jpg?s=640x640&k=20&c=rd5JaxTu7ssPBmWAzmDiNYBMZLS7x4bLh22dhm7vlFk=" 
+  },
+  {
+    title: "PM2.5 and Heart Disease",
+    description: "Long-term exposure to PM2.5 can increase the risk of heart disease and stroke.",
+    name: "American Heart Association",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhI-WKiQ9DmQiLlgTYo3a6qeQUPe443CwKMg&s" 
+  },
+  {
+    title: "Impact on Vegetation",
+    description: "Ozone pollution can damage crops and reduce agricultural production.",
+    name: "Environmental Protection Agency",
+    img: "https://img.freepik.com/premium-vector/dead-tree-polluting-factory-ecological-problem-environmental-pollution-concept-vector-illustration-isolated-white-background_178650-16860.jpg"
+  },
+  {
+    title: "Air Quality and Visibility",
+    description: "High levels of PM2.5 and PM10 can reduce visibility, leading to hazardous driving conditions.",
+    name: "National Oceanic and Atmospheric Administration",
+    img: "https://static.vecteezy.com/system/resources/thumbnails/039/351/538/small_2x/people-wearing-air-pollution-masks-smog-and-mist-vector.jpg"
+  },
+  {
+    title: "Indoor Air Quality",
+    description: "Indoor air pollution can sometimes be worse than outdoor air pollution due to lack of ventilation.",
+    name: "Environmental Protection Agency",
+    img: "https://www.ecosolutionspro.com/wp-content/uploads/2010/12/Sick-House-259x300.jpg"
+  },
+  {
+    title: "Sources of PM2.5",
+    description: "PM2.5 particles are mainly generated from combustion processes, including vehicle engines and industrial activities.",
+    name: "Environmental Protection Agency",
+    img: "https://c8.alamy.com/zooms/6/f4ea62c19dd64e07ae73a969ea4c9f01/tc7gw5.jpg"
+  },
+  {
+    title: "Effects on Wildlife",
+    description: "Air pollution, including ozone and particulate matter, can harm wildlife and disrupt ecosystems.",
+    name: "Environmental Protection Agency",
+    img: "https://www.shutterstock.com/image-vector/sad-comic-bears-suffering-air-260nw-2291294143.jpg"
+  },
+  {
+    title: "Air Quality Index (AQI)",
+    description: "The AQI is a measure used to communicate how polluted the air currently is or how polluted it is forecasted to become.",
+    name: "Environmental Protection Agency",
+    img: "https://media.istockphoto.com/id/1134364154/vector/environment-ecology-infographic-elements-risks-and-pollution-ecosystem.jpg?s=612x612&w=0&k=20&c=1ta5F_oWmXHgCEVbmgX_V-zgXJ38OXASEuI50PDRwsU="
+  }
+];
+

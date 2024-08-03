@@ -39,4 +39,4 @@ npm run dev
 
 ### Screenshot:
 
-![GreenSky UI](src/assets/GreenSky.png)
+![GreenSky UI](src/assets/GreenSky2.png)
