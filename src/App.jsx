@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import notfound from "./assets/not-found.svg";
+import AboutUs from "./components/About/About";
 
 export default function App() {
   const [page, setPage] = useState("home");
@@ -19,9 +20,9 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/about" element={<AboutUs />} />
 
         {/* Under development */}
-        <Route path="/about" element={<InProgress />} />
         <Route path="/services" element={<InProgress />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
