@@ -1,296 +1,318 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "tailwindcss/tailwind.css";
-import wind from "../../assets/wind.png";
-import protect from "../../assets/protect.png";
-import rain from "../../assets/rainy.png";
-import thermometer from "../../assets/thermometer.png";
-import pm25 from "../../assets/pm25.png";
-import pm10 from "../../assets/pm10.png";
-import ozone from "../../assets/ozone.png";
-import monoxide from "../../assets/monoxide.png";
+import wind from "../../assets/wind.svg";
+import thermometer from "../../assets/thermometer.svg";
+import pm25 from "../../assets/pm25.svg";
+import pm10 from "../../assets/pm10.svg";
+import ozone from "../../assets/ozone.svg";
+import monoxide from "../../assets/monoxide.svg";
 import ForecastComponent from "./forcastcomponent";
 import Dataattribution from "./dataAttribution";
+import { getAQIBracket } from "@/lib/utils";
+import { FaLocationDot, FaRoadBarrier } from "react-icons/fa6";
+import { Progress } from "../ui/progress";
 
-const fetchAQIData = async (city) => {
-  const response = await fetch(
-    `https://api.waqi.info/feed/${city}/?token=6fccb080951117599b9e5ee094b857a52e3a9415`
-  );
+const WAQI_KEY = import.meta.env.VITE_WAQI_KEY;
 
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
+const fetchAQIData = async (city) =>
+  axios
+    .get(`https://api.waqi.info/feed/${city}/?token=${WAQI_KEY}`)
+    .then((res) => {
+      let data = res.data;
+      if (data.status === "error") return Promise.reject(data.message);
+      return Promise.resolve(data.data);
+    })
+    .catch((err) => Promise.reject(err?.response?.message || "Network Error"));
 
-  const data = await response.json();
-  if (data.status !== "ok") {
-    throw new Error(data.data);
-  }
+/**
+ * @type {NodeJS.Timeout}
+ */
+let timeout;
 
-  return data.data;
-};
+/**
+ * @type {AbortController}
+ */
+let abortController;
 
 export default function Aqibody() {
   const [city, setCity] = useState("");
   const [aqiData, setAQIData] = useState(null);
   const [error, setError] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [suggestion, setSuggestion] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setCity(e.target.value);
+    setSuggestion(null);
+    let ct = e.target.value;
+    if (timeout) {
+      clearTimeout(timeout);
+      abortController?.abort();
+    }
+
+    if (!ct.length) {
+      setOpen(false);
+      return;
+    }
+
+    timeout = setTimeout(() => {
+      abortController = new AbortController();
+      setOpen(true);
+      axios
+        .get(`https://api.waqi.info/search/?keyword=${ct}&token=${WAQI_KEY}`, {
+          signal: abortController.signal,
+        })
+        .then((res) => {
+          if (res.data.status === "ok") setSuggestion(res.data.data);
+        })
+        .catch(console.log);
+    }, 300);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchData = async (city) => {
+    setAQIData(null);
+    setLoading(true);
     try {
       const data = await fetchAQIData(city);
       setAQIData(data);
       setError("");
-      setCurrentPage(0); // Reset pagination on new data
     } catch (err) {
-      setError(err.message || "Failed to fetch AQI data. Please try again.");
+      setError(err || "Failed to fetch AQI data. Please try again.");
       setAQIData(null);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getColorForAQI = (aqi) => {
-    if (aqi <= 50) return "#55a84f"; // Good - Green
-    if (aqi <= 100) return "#a3c853"; // Moderate - Yellow
-    if (aqi <= 150) return "#fff833"; // Unhealthy for Sensitive Groups - Orange
-    if (aqi <= 200) return "#f29c33"; // Unhealthy - Red
-    if (aqi <= 300) return "#e93f33"; // Very Unhealthy - Purple
-    return "#af2d24"; // Hazardous - Maroon
+  const inputRef = useRef(null);
+  const resultRef = useRef(null);
+
+  const handleClickOutside = (e) => {
+    if (!resultRef.current || !inputRef.current) return;
+
+    if (
+      !resultRef.current.contains(e.target) &&
+      !inputRef.current.contains(e.target)
+    )
+      setOpen(false);
   };
 
-  const getBackgroundColor = (aqi) => {
-    if (aqi >= 0 && aqi <= 50) return "green";
-    if (aqi >= 51 && aqi <= 100) return "yellow";
-    if (aqi >= 101 && aqi <= 150) return "orange";
-    if (aqi >= 151 && aqi <= 200) return "red";
-    if (aqi >= 201 && aqi <= 300) return "purple";
-    if (aqi >= 301 && aqi <= 500) return "maroon";
+  const handleSuggestionClick = (uid) => {
+    setOpen(false);
+    fetchData(`@${uid}`);
+    setCity("");
+    setSuggestion(null);
   };
 
-  const getAQImessage = (aqi) => {
-    if (aqi >= 0 && aqi <= 50)
-      return "Air quality is satisfactory also air pollution poses little or no risk!";
-    if (aqi >= 51 && aqi <= 100)
-      return "Air quality is acceptable, small concern to air sensitive people";
-    if (aqi >= 101 && aqi <= 150)
-      return "People with respiratory or heart conditions, children, and older adults may experience health effects";
-    if (aqi >= 151 && aqi <= 200)
-      return "Everyone may begin to experience health effects including non-sensitive ones.";
-    if (aqi >= 201 && aqi <= 300)
-      return "Health alert: everyone may experience more serious health effects!!";
-    if (aqi >= 301 && aqi <= 500)
-      return "Health warnings of emergency conditions. The entire population is more likely to be affected!!";
-  };
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside);
 
-  const getAQICondition = (aqi) => {
-    if (aqi >= 0 && aqi <= 50) {
-      return "Good";
-    } else if (aqi >= 51 && aqi <= 100) {
-      return "Moderate";
-    } else if (aqi >= 101 && aqi <= 150) {
-      return "Unhealthy for Sensitive Groups";
-    } else if (aqi >= 151 && aqi <= 200) {
-      return "Unhealthy";
-    } else if (aqi >= 201 && aqi <= 300) {
-      return "Very Unhealthy";
-    } else if (aqi >= 301 && aqi <= 500) {
-      return "Hazardous";
-    }
-  };
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
 
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const handleNext = () => {
-    if (aqiData && aqiData.forecast && aqiData.forecast.daily.pm25) {
-      const totalPages = Math.ceil(aqiData.forecast.daily.pm25.length / 4);
-
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentPage((prevPage) => (prevPage + 1) % totalPages);
-        setIsAnimating(false);
-      }, 500); // Duration of the slide animation
-    }
-  };
+  useEffect(() => {
+    fetchData("here");
+  }, []);
 
   return (
     <>
-      <div className="w-screen bg-neutral-900 p-4 md:p-6 lg:p-8 flex flex-col justify-between text-center text-white">
-        <div>
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mt-4">
-            Air Quality Index (AQI) Checker
-          </h1>
-        </div>
-      </div>
-      <div className="min-h-screen bg-neutral-900 text-gray-200 flex">
-        {/* Main Content */}
-        <div className="flex-1 p-4 md:p-6 lg:p-8 bg-neutral-400">
-          <div className="bg-neutral-900 p-4 md:p-6 lg:p-8 rounded-lg shadow-md">
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col md:flex-row items-center mb-6"
-            >
-              <input
-                type="text"
-                value={city}
-                onChange={handleInputChange}
-                placeholder="Enter city name"
-                className="flex-1 px-4 py-2 bg-white rounded-lg border-none focus:ring-2 focus:ring-green-500 text-black font-semibold mb-4 mr-2 md:mb-0"
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-green-500 rounded-lg hover:bg-green-600 transition duration-300"
-              >
-                Search
-              </button>
-            </form>
-
-            {error && (
-              <div className="text-red-500 text-center mb-4">{error}</div>
+      <div className="min-h-dvh text-gray-200 items-center flex flex-col w-full md:w-11/12 lg:w-3/4 my-10 md:mx-auto">
+        <label
+          ref={inputRef}
+          className="input relative max-w-96 input-bordered input-primary flex items-center gap-2 w-full bg-base-200 rounded-box"
+          onFocus={() => {
+            if (!open && suggestion !== null) setOpen(true);
+          }}
+        >
+          <input
+            type="text"
+            className="grow"
+            placeholder="Search city or station"
+            value={city}
+            onChange={handleInputChange}
+          />
+          <button className="btn btn-sm btn-ghost btn-circle">
+            <FaLocationDot size={16} />
+          </button>
+          <div
+            ref={resultRef}
+            className={`duration-300 absolute top-12 left-0 flex flex-col px-1 bg-base-200 shadow-neutral-800 rounded-lg mt-1 shadow-xl w-full max-w-96 ${
+              open ? "h-48 py-3" : "h-0 py-0"
+            } overflow-y-auto`}
+          >
+            {open && !suggestion && (
+              <div className="m-auto loading loading-ring loading-lg"></div>
             )}
-            {/* AQI SECTION */}
-            {aqiData && (
-              <div>
-                <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-                  <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-green-300 mb-4 md:mb-0">
-                    {aqiData.city.name}
-                  </h2>
-                  {/* aqimessage */}
-                  <div
-                    className={`w-full md:w-1/2 lg:w-1/3 h-30 bg-${getBackgroundColor(
-                      aqiData.aqi
-                    )}-500 rounded-lg text-center mb-4 md:mb-0`}
-                  >
-                    <div className="p-2 md:p-4">
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl text-gray-100">
-                        {getAQICondition(aqiData.aqi)}
-                      </p>
-                      <div className="text-sm md:text-base lg:text-lg">
-                        {getAQImessage(aqiData.aqi)}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-center">
-                    <div className="w-24 h-24 mb-2 mx-auto">
-                      <CircularProgressbar
-                        value={aqiData.aqi}
-                        maxValue={500}
-                        text={`${aqiData.aqi}`}
-                        styles={buildStyles({
-                          textColor: "#fff",
-                          pathColor: getColorForAQI(aqiData.aqi),
-                          trailColor: "#555",
-                        })}
-                      />
-                    </div>
-                    <p className="font-semibold text-xl md:text-2xl">AQI</p>
-                  </div>
-                </div>
-
-                {/* AIR CONDITIONS */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-gray-700 p-4 md:p-6 rounded-lg shadow-inner text-gray-400">
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-semibold mb-4 text-center border rounded-lg bg-blue-300 pt-1 h-9 text-black">
-                      Air Conditions
-                    </h3>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={thermometer}
-                        alt="Thermometer"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        Real Feel: {aqiData.iaqi.t?.v}°C
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={wind}
-                        alt="Wind"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        Wind: {aqiData.iaqi.w?.v} m/s
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={rain}
-                        alt="Rain"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        Chances of Rain: 0%
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={protect}
-                        alt="UV Index"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        UV Index: 3
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Pollutant Levels */}
-                  <div className="bg-gray-700 p-4 md:p-6 rounded-lg shadow-inner text-gray-400">
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-semibold mb-4 text-center border rounded-lg bg-amber-600 pt-1 h-9 text-black">
-                      Pollutant Levels
-                    </h3>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={pm25}
-                        alt="PM2.5"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        PM2.5: {aqiData.iaqi.pm25?.v} µg/m³
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={pm10}
-                        alt="PM10"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        PM10: {aqiData.iaqi.pm10?.v} µg/m³
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={monoxide}
-                        alt="CO"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        CO: {aqiData.iaqi.co?.v} µg/m³
-                      </p>
-                    </div>
-                    <div className="flex items-center space-x-2 mb-4">
-                      <img
-                        className="w-12 h-auto object-cover rounded-lg shadow-inner"
-                        src={ozone}
-                        alt="O3"
-                      />
-                      <p className="font-bold text-lg md:text-xl lg:text-2xl">
-                        O3: {aqiData.iaqi.o3?.v} µg/m³
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <ForecastComponent aqiData={aqiData} />
-                <Dataattribution aqiData={aqiData} />
+            {suggestion &&
+              !!suggestion.length &&
+              suggestion.map((s) => (
+                <button
+                  key={s.uid}
+                  className="btn btn-ghost w-full justify-between items-center text-left py-1"
+                  onClick={() => handleSuggestionClick(s.uid)}
+                >
+                  <span className="w-10/12">{s.station.name}</span>
+                  {s.aqi !== "-" && (
+                    <span
+                      style={{ color: getAQIBracket(parseInt(s.aqi))?.color }}
+                      className="text-xs"
+                    >
+                      {s.aqi}
+                    </span>
+                  )}
+                </button>
+              ))}
+            {suggestion && !suggestion.length && (
+              <div className="text-neutral-400 m-auto flex flex-col items-center">
+                <FaRoadBarrier size={48} />
+                <span>No Results</span>
               </div>
             )}
           </div>
+        </label>
+
+        {loading && (
+          <div className="loading loading-dots loading-lg text-neutral my-10"></div>
+        )}
+        {aqiData && (
+          <div className="rounded-xl w-full p-10 pb-0 my-10 shadow-lg bg-base-200">
+            <div className="text-3xl text-center text-primary font-bold">
+              {aqiData.city.name}
+            </div>
+            <div className="flex flex-wrap">
+              {/* Air Conditions */}
+              <div className="flex flex-col p-5 my-10 w-3/5 duration-300">
+                <p className="text-2xl font-bold border-s-4 p-2 text-blue-400 border-blue-400">
+                  Air Conditions
+                </p>
+                <div className="flex items-end px-2 py-3">
+                  <img
+                    src={thermometer}
+                    alt="temperature"
+                    className="w-12 h-12"
+                  />
+                  <p className="py-2 text-xl text-neutral font-semibold">
+                    {parseFloat(aqiData.iaqi.t?.v).toFixed(2)} °C
+                  </p>
+                  {/* <div className="mx-3 border-e-2 h-full"></div> */}
+                  <div className="m-3"></div>
+                  <img src={wind} alt="wind" className="w-12 h-12" />
+                  <p className="p-2 text-xl text-neutral font-semibold">
+                    {parseFloat(aqiData.iaqi.w?.v).toFixed(2)} m/s
+                  </p>
+                </div>
+                <p className="text-2xl mt-5 font-bold border-s-4 p-2 text-amber-400 border-amber-400">
+                  Pollutants
+                </p>
+                <div className="flex flex-col px-2 py-3 flex-wrap">
+                  {aqiData.iaqi.pm25?.v && (
+                    <div className="flex items-center gap-5">
+                      <img src={pm25} alt="pm25" className="w-12 h-12" />
+                      <Progress
+                        value={Math.min(250, aqiData.iaqi.pm25.v)}
+                        max={250}
+                        className="bg-neutral-700 w-48"
+                      />
+                      <p className="py-2 text-xl text-neutral font-semibold">
+                        {parseFloat(aqiData.iaqi.pm25?.v).toFixed(2)} µg/m³
+                      </p>
+                    </div>
+                  )}
+                  {aqiData.iaqi.pm10?.v && (
+                    <div className="flex items-center gap-5">
+                      <img src={pm10} alt="pm10" className="w-12 h-12" />
+                      <Progress
+                        value={Math.min(250, aqiData.iaqi.pm10.v)}
+                        max={250}
+                        className="bg-neutral-700 w-48"
+                      />
+                      <p className="py-2 text-xl text-neutral font-semibold">
+                        {parseFloat(aqiData.iaqi.pm10?.v).toFixed(2)} µg/m³
+                      </p>
+                    </div>
+                  )}
+                  {aqiData.iaqi.co?.v && (
+                    <div className="flex items-center gap-5">
+                      <img
+                        src={monoxide}
+                        alt="monoxide"
+                        className="w-12 h-12"
+                      />
+                      <Progress
+                        value={aqiData.iaqi.co.v}
+                        max={50}
+                        className="bg-neutral-700 w-48"
+                      />
+                      <p className="py-2 text-xl text-neutral font-semibold">
+                        {parseFloat(aqiData.iaqi.co?.v).toFixed(2)} ppm
+                      </p>
+                    </div>
+                  )}
+                  {aqiData.iaqi.o3?.v && (
+                    <div className="flex items-center gap-5">
+                      <img src={ozone} alt="ozone" className="w-12 h-12" />
+                      <Progress
+                        value={aqiData.iaqi.o3.v}
+                        max={150}
+                        className="bg-neutral-700 w-48"
+                      />
+                      <p className="py-2 text-xl text-neutral font-semibold">
+                        {parseFloat(aqiData.iaqi.o3?.v).toFixed(2)} ppb
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* AQI */}
+              <div
+                className={`flex flex-col py-10 px-5 rounded-3xl items-center border-2 border-${
+                  getAQIBracket(aqiData.aqi).bg
+                }-500 duration-300 my-auto lg:w-2/5`}
+              >
+                <div className="w-32 h-32 mb-10 mx-auto duration-300">
+                  <CircularProgressbar
+                    value={aqiData.aqi}
+                    maxValue={500}
+                    text={`${aqiData.aqi}`}
+                    styles={buildStyles({
+                      textColor: getAQIBracket(aqiData.aqi).color,
+                      pathColor: getAQIBracket(aqiData.aqi).color,
+                      trailColor: "#555",
+                    })}
+                  />
+                </div>
+
+                {/* AQI Message */}
+                <div className="w-full max-w-[400px] text-center duration-300">
+                  <p
+                    className={`font-bold text-2xl text-${
+                      getAQIBracket(aqiData.aqi).bg
+                    }-500 duration-300`}
+                  >
+                    {getAQIBracket(aqiData.aqi).condition}
+                  </p>
+                  <div>{getAQIBracket(aqiData.aqi).message}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {aqiData && <ForecastComponent forecast={aqiData?.forecast} />}
+        {aqiData && (
+          <Dataattribution
+            attribution={aqiData?.attributions}
+            time={aqiData?.time}
+          />
+        )}
+
+        <div className=" p-4 md:p-6 lg:p-8 ">
+          {error && (
+            <div className="text-red-500 text-center mb-4">{error}</div>
+          )}
         </div>
       </div>
     </>

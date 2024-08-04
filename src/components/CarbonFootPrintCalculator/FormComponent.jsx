@@ -39,7 +39,7 @@ const FormComponent = ({ title, fields, onSubmit, loading }) => {
                 value={formState[field.name]}
                 onChange={handleChange}
                 placeholder={`Enter ${field.label.toLowerCase()}`}
-                className="bg-base-100"
+                className="bg-base-200"
               />
             ) : (
               <Select

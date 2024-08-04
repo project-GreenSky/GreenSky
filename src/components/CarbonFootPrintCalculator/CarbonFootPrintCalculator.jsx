@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import FormComponent from "./FormComponent";
 import "./CarbonFootPrintCalculator.css";
-import { calculators } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -10,16 +9,153 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { FaInfo } from "react-icons/fa6";
+import bus from "../../assets/bus.svg";
+import car from "../../assets/car.svg";
+import motorbike from "../../assets/motorbike.svg";
+import flight from "../../assets/flight.svg";
+import fuel from "../../assets/fuel.svg";
+import clean from "../../assets/clean.svg";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const apiUrl = import.meta.env.VITE_API_URL;
+
+// available calculators
+export const calculators = [
+  {
+    title: "Clean Energy to CO2",
+    fields: [
+      {
+        name: "energy",
+        label: "Energy Type",
+        options: [
+          "Solar",
+          "Wind",
+          "HydroElectric",
+          "Biomass",
+          "Geothermal",
+          "Tidal",
+          "OtherCleanEnergy",
+        ],
+      },
+      { name: "consumption", label: "Consumption (KWH)", type: "number" },
+    ],
+    endpoint:
+      "https://carbonfootprint1.p.rapidapi.com/CleanHydroToCarbonFootprint",
+    icon: clean,
+  },
+  {
+    title: "Fuel to CO2e",
+    fields: [
+      {
+        name: "type",
+        label: "Fuel Type",
+        options: ["Petrol", "Diesel", "LPG"],
+      },
+      { name: "litres", label: "Litres", type: "number" },
+    ],
+    endpoint: "https://carbonfootprint1.p.rapidapi.com/FuelToCO2e",
+    icon: fuel,
+  },
+  {
+    title: "Car Travel",
+    fields: [
+      {
+        name: "vehicle",
+        label: "Vehicle Type",
+        options: [
+          "SmallDieselCar",
+          "MediumDieselCar",
+          "LargeDieselCar",
+          "MediumHybridCar",
+          "LargeHybridCar",
+          "MediumLPGCar",
+          "LargeLPGCar",
+          "MediumCNGCar",
+          "LargeCNGCar",
+          "SmallPetrolVan",
+          "LargePetrolVan",
+          "SmallDieselVan",
+          "MediumDieselVan",
+          "LargeDieselVan",
+          "LPGVan",
+          "CNGVan",
+          "SmallPetrolCar",
+          "MediumPetrolCar",
+          "LargePetrolCar",
+          "SmallMotorBike",
+          "MediumMotorBike",
+          "LargeMotorBike",
+        ],
+      },
+      { name: "distance", label: "Distance (KM)", type: "number" },
+    ],
+    endpoint:
+      "https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromCarTravel",
+    icon: car,
+  },
+  {
+    title: "Flight Travel",
+    fields: [
+      {
+        name: "type",
+        label: "Flight Type",
+        options: [
+          "DomesticFlight",
+          "ShortEconomyClassFlight",
+          "ShortBusinessClassFlight",
+          "LongEconomyClassFlight",
+          "LongPremiumClassFlight",
+          "LongBusinessClassFlight",
+          "LongFirstClassFlight",
+        ],
+      },
+      { name: "distance", label: "Distance (KM)", type: "number" },
+    ],
+    endpoint:
+      "https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromFlight",
+    icon: flight,
+  },
+  {
+    title: "Motorbike Travel",
+    fields: [
+      {
+        name: "type",
+        label: "Motorbike Type",
+        options: ["SmallMotorBike", "MediumMotorBike", "LargeMotorBike"],
+      },
+      { name: "distance", label: "Distance (KM)", type: "number" },
+    ],
+    endpoint:
+      "https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromMotorBike",
+    icon: motorbike,
+  },
+  {
+    title: "Public Transport",
+    fields: [
+      {
+        name: "type",
+        label: "Transport Type",
+        options: [
+          "Taxi",
+          "ClassicBus",
+          "EcoBus",
+          "Coach",
+          "NationalTrain",
+          "LightRail",
+          "Subway",
+          "FerryOnFoot",
+          "FerryInCar",
+        ],
+      },
+      { name: "distance", label: "Distance (KM)", type: "number" },
+    ],
+    endpoint:
+      "https://carbonfootprint1.p.rapidapi.com/CarbonFootprintFromPublicTransit",
+    icon: bus,
+  },
+];
 
 const CarbonFootprintCalculator = () => {
   const [result, setResult] = useState(null);
@@ -59,7 +195,7 @@ const CarbonFootprintCalculator = () => {
         backgroundSize: 200,
         backgroundPosition: "2% 100%",
       }}
-      className="w-full duration-300 lg:w-5/6 mx-auto lg:my-3 p-10 gap-10 shadow-neutral lg:rounded-xl shadow-lg flex flex-col"
+      className="w-full duration-300 lg:w-3/4 mx-auto lg:my-5 p-10 gap-10 lg:rounded-xl bg-base-200 shadow-lg flex flex-col"
     >
       <div className="flex flex-wrap justify-around">
         <div className="flex flex-col justify-center gap-12 overflow-hidden">
@@ -75,7 +211,7 @@ const CarbonFootprintCalculator = () => {
               setResult(null);
             }}
           >
-            <SelectTrigger className="max-w-[250px] mx-auto my-2 bg-base-100">
+            <SelectTrigger className="max-w-[250px] mx-auto my-2 bg-base-200">
               <SelectValue placeholder={calculators[0].title} />
             </SelectTrigger>
             <SelectContent>

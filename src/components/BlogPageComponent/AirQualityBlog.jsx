@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./AirQualityBlog.css";
+
+const BASE_URL = import.meta.env.VITE_BLOG_IMG_BASE_URL
+
+// Blog list
 const blogs = [
   {
     id: 1,
     title: "Understanding Air Quality",
-    image: "src/assets/blog1.jpeg",
+    image: `${BASE_URL}/greensky/zwvguvn2e4eqfmqmiwy4.jpg`,
     content: `Air quality refers to the condition of the air within our surroundings.
               It is important because it affects our health, the environment, and the
               climate. Good air quality means clean, clear, unpolluted air. Bad air quality
@@ -14,7 +18,7 @@ const blogs = [
   {
     id: 2,
     title: "Health Impacts of Air Pollution",
-    image: "src/assets/blog2.jpeg",
+    image: `${BASE_URL}/greensky/il0cyc5njo67ce9s2rah.jpg`,
     content: `Exposure to polluted air can have significant health impacts, including
               respiratory and cardiovascular diseases. Long-term exposure can lead to chronic
               conditions and even premature death. Children, the elderly, and people with
@@ -25,7 +29,7 @@ const blogs = [
   {
     id: 3,
     title: "Causes of Air Pollution",
-    image: "src/assets/blog3.jpeg",
+    image: `${BASE_URL}/greensky/nt13xgek8sedafwoooiu.jpg`,
     content: `Air pollution can be caused by various factors, including industrial emissions,
               vehicle exhaust, burning of fossil fuels, and agricultural activities. These
               sources release pollutants such as particulate matter, nitrogen oxides, sulfur
@@ -36,7 +40,7 @@ const blogs = [
   {
     id: 4,
     title: "Effects of Indoor Air Pollution",
-    image: "src/assets/blog4.jpeg",
+    image: `${BASE_URL}/greensky/hxwclb2ngcy8esdxgu4v.jpg`,
     content: `Indoor air pollution refers to the contamination of indoor air by pollutants
               such as smoke, dust, mold, and chemicals. It can have adverse effects on
               human health, particularly respiratory health. Poor ventilation, smoking,
@@ -48,7 +52,7 @@ const blogs = [
   {
     id: 5,
     title: "Air Quality Index (AQI)",
-    image: "src/assets/blog5.jpeg",
+    image: `${BASE_URL}/greensky/vlbta00vpeh5qhdew52i.jpg`,
     content: `The Air Quality Index (AQI) is a measure used to assess and report air quality
               levels. It provides information about the concentration of pollutants in the air
               and their potential health effects. The AQI is typically categorized into
@@ -59,7 +63,7 @@ const blogs = [
   {
     id: 6,
     title: "Air Quality Monitoring",
-    image: "src/assets/blog6.jpeg",
+    image: `${BASE_URL}/greensky/qsimj90c9dgr65b2ul4w.jpg`,
     content: `Air quality monitoring involves the measurement and analysis of air pollutants
               to assess the quality of the air. Monitoring stations are set up in various
               locations to collect data on pollutant levels. This data is used to identify
@@ -71,7 +75,7 @@ const blogs = [
   {
     id: 7,
     title: "Air Quality Regulations",
-    image: "src/assets/blog7.jpeg",
+    image: `${BASE_URL}/greensky/t3iht44curndulm38e7e.jpg`,
     content: `Air quality regulations are laws and policies implemented by governments to
               control and reduce air pollution. These regulations set limits on pollutant
               emissions from various sources, establish air quality standards, and outline
@@ -82,7 +86,7 @@ const blogs = [
   {
     id: 8,
     title: "Air Quality Improvement Strategies",
-    image: "src/assets/blog8.jpeg",
+    image: `${BASE_URL}/greensky/fyibgucuwhjjlz6wiyos.jpg`,
     content: `To improve air quality, various strategies can be implemented at different levels.
               These include reducing emissions from industrial processes and vehicles,
               promoting clean energy sources, implementing stricter emission standards,
@@ -93,7 +97,7 @@ const blogs = [
   {
     id: 9,
     title: "Air Quality and Climate Change",
-    image: "src/assets/blog9.jpeg",
+    image: `${BASE_URL}/greensky/cmfj7vcjjakglktjygn2.jpg`,
     content: `Air quality and climate change are closely interconnected. Many air pollutants,
               such as carbon dioxide, methane, and black carbon, contribute to both air
               pollution and climate change. Addressing air pollution can have co-benefits
@@ -104,7 +108,7 @@ const blogs = [
   {
     id: 10,
     title: "Individual Actions for Better Air Quality",
-    image: "src/assets/blog10.jpeg",
+    image: `${BASE_URL}/greensky/bo6seap2okeb5ipvedbf.jpg`,
     content: `Individuals can also contribute to better air quality by adopting certain actions.
               These include using public transportation or carpooling, reducing energy
               consumption, avoiding burning of waste, planting trees, and practicing
@@ -115,7 +119,7 @@ const blogs = [
   {
     id: 11,
     title: "Air Quality and Respiratory Health",
-    image: "src/assets/blog11.jpeg",
+    image: `${BASE_URL}/greensky/kjx01xwzyawy3zxskm25.jpg`,
     content: `Air quality plays a crucial role in respiratory health. Poor air quality can
               exacerbate respiratory conditions such as asthma, bronchitis, and allergies.
               It can also increase the risk of respiratory infections. Children, the elderly,
@@ -126,7 +130,7 @@ const blogs = [
   {
     id: 12,
     title: "Air Quality and Environmental Impact",
-    image: "src/assets/blog12.jpeg",
+    image: `${BASE_URL}/greensky/ywa9sx6v6tjnswtplcx1.jpg`,
     content: `Air pollution has significant environmental impacts. It can harm ecosystems,
               damage vegetation, and contribute to climate change. Pollutants released into
               the air can deposit on land and water, leading to soil and water pollution.
@@ -154,11 +158,14 @@ const AirQualityBlog = () => {
         <p>Exploring the importance of clean air for a healthier future</p>
       </header>
 
-
       <main>
         <div className="blog-grid">
           {blogs.map((blog) => (
-            <div key={blog.id} className="blog-card" onClick={() => handleBlogClick(blog)}>
+            <div
+              key={blog.id}
+              className="blog-card"
+              onClick={() => handleBlogClick(blog)}
+            >
               <img src={blog.image} alt={blog.title} />
               <h2>{blog.title}</h2>
             </div>
@@ -168,7 +175,9 @@ const AirQualityBlog = () => {
       {selectedBlog && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closeModal}>×</button>
+            <button className="close-button" onClick={closeModal}>
+              ×
+            </button>
             <h2>{selectedBlog.title}</h2>
             <img src={selectedBlog.image} alt={selectedBlog.title} />
             <p>{selectedBlog.content}</p>

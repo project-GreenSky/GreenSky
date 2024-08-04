@@ -1,28 +1,27 @@
+import moment from "moment";
 import React from "react";
 
-function Dataattribution({ aqiData }) {
+function Dataattribution({ attribution, time }) {
   return (
     <>
-      <div className="mt-6 bg-gray-700 p-6 rounded-lg shadow-inner">
-        <h3 className="text-xl font-semibold mb-4">Data Attribution</h3>
-        <ul className="list-disc list-inside">
-          {aqiData.attributions.map((attr, index) => (
+      <div className="flex justify-between p-5 w-full text-neutral">
+        <div>
+          <p>Sources</p>
+          {attribution.map((attr, index) => (
             <li key={index}>
               <a
                 href={attr.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-green-300 hover:underline"
+                className="text-sm hover:underline hover:text-gray-300 duration-300"
               >
                 {attr.name}
               </a>
             </li>
           ))}
-        </ul>
+        </div>
+        <p className="text-xs text-green-500 my-auto">Last Updated: {moment(time.s).fromNow()}</p>
       </div>
-      <p className="text-right text-gray-500 mt-4">
-        Last Updated: {aqiData.time.s}
-      </p>
     </>
   );
 }
