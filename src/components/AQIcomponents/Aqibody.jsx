@@ -201,7 +201,7 @@ export default function Aqibody() {
         {aqiData && (
           <div
             className={
-              clsx("w-full", "bg-base-200 rounded-xl shadow-lg", "p-2 md:p-10")
+              clsx("w-full", "bg-gradient-to-br from-[#323232] to-[#121212] rounded-xl shadow-lg", "p-2 md:p-10")
               // "p-2 md:p-10 mb-3 mt-5 md:my-10 rounded-xl w-full shadow-lg bg-base-200"
             }
           >

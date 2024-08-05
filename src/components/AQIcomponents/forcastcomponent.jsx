@@ -28,7 +28,7 @@ const ForecastComponent = ({ forecast }) => {
       {Object.entries(forecast?.daily || {}).map(([key, value]) => (
         <div
           key={key}
-          className="md:rounded-xl w-full px-2 py-5 my-2 md:p-10 md:my-5 shadow-lg bg-base-200 overflow-hidden"
+          className="md:rounded-xl w-full px-2 py-5 my-2 md:p-10 md:my-5 shadow-lg bg-gradient-to-br from-[#323232] to-[#121212] overflow-hidden"
         >
           <div className="text-xl md:text-2xl font-semibold mb-5 border-s-4 p-2 text-green-500 border-green-500">
             {(key === "pm25" ? "pm2.5" : key).toUpperCase()} Forecast

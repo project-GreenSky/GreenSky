@@ -188,14 +188,14 @@ const CarbonFootprintCalculator = () => {
 
   return (
     <div
-      style={{
-        backgroundImage: `url(${selected.icon})`,
-        backgroundAttachment: "local",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: 200,
-        backgroundPosition: "2% 100%",
-      }}
-      className="max-w-container duration-300 mx-auto p-10 gap-10 lg:rounded-xl bg-base-200 shadow-lg flex flex-col"
+      // style={{
+      //   backgroundImage: `url(${selected.icon})`,
+      //   backgroundAttachment: "local",
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundSize: 200,
+      //   backgroundPosition: "2% 100%",
+      // }}
+      className="max-w-container duration-300 mx-auto p-10 gap-10 lg:rounded-xl bg-gradient-to-br from-[#323232] to-[#121212] shadow-lg flex flex-col"
     >
       <div className="flex flex-wrap justify-around">
         <div className="flex flex-col justify-center gap-12 overflow-hidden">
