@@ -1,20 +1,19 @@
 /* BlogPage.css */
 .blog-page {
-  font-family: 'Arial', sans-serif;
-  background-color: #25472c;
   color: #000000;
 }
 
 header {
-  background-color: #3ea543;
+  background-color: #22c55e;
   color: white;
+  font-weight: bold;
   text-align: center;
   padding: 2rem 0;
   margin-bottom: 2rem;
 }
 
 header h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 0.5rem;
 }
 
@@ -26,17 +25,18 @@ header p {
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
   padding: 0 2rem;
 }
 
 .blog-card {
-  background-color: rgb(22, 28, 25);
-  border-radius: 10px;
+  background: linear-gradient(to bottom right, #323232, #121212);
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;  
+  border-radius: 1%;
+  transition: transform 0.3s ease;
+  transform: scale(0.95);  
   cursor: pointer;
+  margin-bottom: 0.75rem;
 }
 
 .blog-card:hover {
@@ -53,6 +53,8 @@ header p {
   padding: 1rem;
   font-size: 1.2rem;
   text-align: center;
+  /* border: 2px solid #12c25b; */
+
 }
 
 .modal-overlay {
@@ -69,11 +71,13 @@ header p {
 }
 
 .modal-content {
-  background-color: rgb(140, 237, 151);
+  background: linear-gradient(to bottom, #323232, #4f4c4c);
   padding: 2rem;
   border-radius: 10px;
+  color: #e0d5d5; 
+  box-shadow: "0 0 1px #fff";
   max-width: 800px;
-  width: 90%;
+  width: 93%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -81,16 +85,19 @@ header p {
 
 .close-button {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 2px;
+  right: 12px;
   font-size: 1.5rem;
   background: none;
   border: none;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .modal-content h2 {
   margin-bottom: 1rem;
+  font-size: 1.1rem;
+  border-radius: 5px;
 }
 
 .modal-content img {

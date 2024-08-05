@@ -25,10 +25,10 @@ function ContactUsForm() {
   return (
     <div className="text-white min-h-screen flex items-center justify-center">
       <div
-        className="bg-base-200 p-8 rounded-lg shadow-lg w-full max-w-4xl"
-        style={{ border: "2px solid #ffffffb1", boxShadow: "0 0 10px #fff" }}
+        className="bg-gradient-to-br from-[#323232] to-[#121212] m-3 p-8 rounded-lg shadow-lg w-full max-w-4xl"
+        style={{ border: "2px solid #ffffffb1", boxShadow: "0 0 1px #fff" }}
       >
-        <h2 className="text-3xl rounded-lg font-semibold mb-6 text-center">
+        <h2 className="text-2xl rounded-lg font-semibold mb-6 text-center">
           Contact Us
         </h2>
 
@@ -49,20 +49,20 @@ function ContactUsForm() {
               required
             />
           </div>
-            <InputField
-              label="Email"
-              id="email"
-              name="email"
-              type="email"
-              required
-            />
-            <InputField
-              label="Subject"
-              id="subject"
-              name="subject"
-              type="text"
-              required
-            />
+          <InputField
+            label="Email"
+            id="email"
+            name="email"
+            type="email"
+            required
+          />
+          <InputField
+            label="Subject"
+            id="subject"
+            name="subject"
+            type="text"
+            required
+          />
           <div>
             <label htmlFor="message" className="block">
               Message
@@ -79,7 +79,7 @@ function ContactUsForm() {
           <div className="text-center">
             <button
               type="submit"
-              className="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600"
+              className="px-6 py-3 mt-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-600"
             >
               Submit
             </button>
