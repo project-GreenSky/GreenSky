@@ -43,7 +43,7 @@ export default function AboutUs() {
 
   return (
     <div className="about-us">
-      <div className="content-wrapper bg-base-200">
+      <div className="content-wrapper bg-base-200 rounded-lg">
         <motion.h1
           initial="hidden"
           animate="visible"
@@ -65,7 +65,7 @@ export default function AboutUs() {
 
         <section className="vision my-2">
           <h2>Our Vision</h2>
-          <p className="text-neutral p-3">
+          <p className="text-gray-300 p-3">
             At GreenSky, we envision a world where urban dwellers breathe clean
             air, live healthier lives, and actively participate in creating
             sustainable cities.
@@ -74,7 +74,7 @@ export default function AboutUs() {
 
         <section className="mission my-2">
           <h2>Our Mission</h2>
-          <ul className="text-neutral p-3">
+          <ul className="text-gray-300 p-3">
             <li>Empower citizens with real-time air quality data</li>
             <li>Support authorities in making data-driven decisions</li>
             <li>Promote sustainable practices</li>
@@ -84,7 +84,7 @@ export default function AboutUs() {
 
         <section className="approach my-2">
           <h2>Our Approach</h2>
-          <div className="feature-grid text-neutral">
+          <div className="feature-grid  text-gray-300">
             {[
               "Real-time data visualization",
               "CO2 emission calculators",
@@ -108,7 +108,7 @@ export default function AboutUs() {
 
         <section className="challenge my-2">
           <h2>The Challenge We're Tackling</h2>
-          <p className="text-neutral p-3">
+          <p className="text-gray-300 p-3">
             Urban areas worldwide are grappling with dangerous levels of air
             pollution. We're bridging the gap by developing a comprehensive
             solution that connects citizens, authorities, and environmental
@@ -118,7 +118,7 @@ export default function AboutUs() {
 
         <section className="team my-2">
           <h2>Our Team</h2>
-          <p className="text-neutral p-3">
+          <p className="text-gray-300 p-3">
             We are six passionate students from{" "}
             <strong>
               University School of Information, Communication And Technology
@@ -144,7 +144,7 @@ export default function AboutUs() {
                   alt={member.name}
                 />
                 <h3>{member.name}</h3>
-                <p className="text-neutral p-3">{member.role}</p>
+                <p className="text-gray-300 p-3">{member.role}</p>
               </motion.a>
             ))}
           </div>
@@ -152,7 +152,7 @@ export default function AboutUs() {
 
         <section className="impact my-2">
           <h2>Our Impact</h2>
-          <p className="text-neutral p-3">
+          <p className="text-gray-300 p-3">
             Through GreenSky, we aspire to increase awareness, enhance
             decision-making, contribute to healthier urban living, and foster
             community collaboration for a greener future.
