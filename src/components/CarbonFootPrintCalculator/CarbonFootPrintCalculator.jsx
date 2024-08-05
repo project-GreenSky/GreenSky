@@ -195,7 +195,7 @@ const CarbonFootprintCalculator = () => {
         backgroundSize: 200,
         backgroundPosition: "2% 100%",
       }}
-      className="w-full duration-300 lg:w-3/4 mx-auto lg:my-5 p-10 gap-10 lg:rounded-xl bg-base-200 shadow-lg flex flex-col"
+      className="max-w-container duration-300 mx-auto p-10 gap-10 lg:rounded-xl bg-base-200 shadow-lg flex flex-col"
     >
       <div className="flex flex-wrap justify-around">
         <div className="flex flex-col justify-center gap-12 overflow-hidden">
