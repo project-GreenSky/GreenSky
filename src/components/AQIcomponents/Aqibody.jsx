@@ -14,6 +14,7 @@ import Dataattribution from "./dataAttribution";
 import { getAQIBracket } from "@/lib/utils";
 import { FaLocationDot, FaRoadBarrier } from "react-icons/fa6";
 import { Progress } from "../ui/progress";
+import clsx from "clsx";
 
 const WAQI_KEY = import.meta.env.VITE_WAQI_KEY;
 
@@ -120,117 +121,153 @@ export default function Aqibody() {
 
   return (
     <>
-      <div className="min-h-dvh text-gray-200 items-center flex flex-col w-full md:w-11/12 lg:w-3/4 my-10 md:mx-auto">
-        <label
-          ref={inputRef}
-          className="input relative max-w-96 input-bordered input-primary flex items-center gap-2 w-full bg-base-200 rounded-box"
-          onFocus={() => {
-            if (!open && suggestion !== null) setOpen(true);
-          }}
-        >
-          <input
-            type="text"
-            className="grow"
-            placeholder="Search city or station"
-            value={city}
-            onChange={handleInputChange}
-          />
-          <button className="btn btn-sm btn-ghost btn-circle">
-            <FaLocationDot size={16} />
-          </button>
-          <div
-            ref={resultRef}
-            className={`duration-300 absolute top-12 left-0 flex flex-col px-1 bg-base-200 shadow-neutral-800 rounded-lg mt-1 shadow-xl w-full max-w-96 ${
-              open ? "h-48 py-3" : "h-0 py-0"
-            } overflow-y-auto`}
+      <div
+        className={clsx(
+          "flex flex-col items-center",
+          "min-h-dvh max-w-container",
+          "mx-auto px-2"
+        )}
+      >
+        <div className="w-full px-2 max-w-96">
+          <label
+            ref={inputRef}
+            className={clsx(
+              "input input-bordered input-primary",
+              "relative flex items-center gap-2",
+              "bg-base-200 rounded-box",
+              "my-5 w-full md:my-10"
+            )}
+            onFocus={() => {
+              if (!open && suggestion !== null) setOpen(true);
+            }}
           >
-            {open && !suggestion && (
-              <div className="m-auto loading loading-ring loading-lg"></div>
-            )}
-            {suggestion &&
-              !!suggestion.length &&
-              suggestion.map((s) => (
-                <button
-                  key={s.uid}
-                  className="btn btn-ghost w-full justify-between items-center text-left py-1"
-                  onClick={() => handleSuggestionClick(s.uid)}
-                >
-                  <span className="w-10/12">{s.station.name}</span>
-                  {s.aqi !== "-" && (
-                    <span
-                      style={{ color: getAQIBracket(parseInt(s.aqi))?.color }}
-                      className="text-xs"
-                    >
-                      {s.aqi}
-                    </span>
-                  )}
-                </button>
-              ))}
-            {suggestion && !suggestion.length && (
-              <div className="text-neutral-400 m-auto flex flex-col items-center">
-                <FaRoadBarrier size={48} />
-                <span>No Results</span>
-              </div>
-            )}
-          </div>
-        </label>
+            <input
+              type="text"
+              className="grow mx-2"
+              placeholder="Search city or station"
+              value={city}
+              onChange={handleInputChange}
+            />
+            <button className="btn btn-sm btn-ghost btn-circle">
+              <FaLocationDot size={16} />
+            </button>
+            <div
+              ref={resultRef}
+              className={clsx(
+                "absolute top-12 left-0",
+                "flex flex-col",
+                "bg-base-200 shadow-xl shadow-neutral-800",
+                "px-1 mt-1 w-full max-w-96 rounded-lg",
+                open && "h-48 py-3",
+                !open && "h-0 p-0",
+                "overflow-y-auto duration-300"
+              )}
+            >
+              {open && !suggestion && (
+                <div className="m-auto loading loading-ring loading-lg"></div>
+              )}
+              {suggestion &&
+                !!suggestion.length &&
+                suggestion.map((s) => (
+                  <button
+                    key={s.uid}
+                    className="btn btn-ghost w-full justify-between items-center text-left py-1"
+                    onClick={() => handleSuggestionClick(s.uid)}
+                  >
+                    <span className="w-10/12">{s.station.name}</span>
+                    {s.aqi !== "-" && (
+                      <span
+                        style={{ color: getAQIBracket(parseInt(s.aqi))?.color }}
+                        className="text-xs"
+                      >
+                        {s.aqi}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              {suggestion && !suggestion.length && (
+                <div className="text-neutral-400 m-auto flex flex-col items-center">
+                  <FaRoadBarrier size={48} />
+                  <span>No Results</span>
+                </div>
+              )}
+            </div>
+          </label>
+        </div>
 
         {loading && (
           <div className="loading loading-dots loading-lg text-neutral my-10"></div>
         )}
         {aqiData && (
-          <div className="rounded-xl w-full p-10 pb-0 my-10 shadow-lg bg-base-200">
-            <div className="text-3xl text-center text-primary font-bold">
+          <div
+            className={
+              clsx("w-full", "bg-base-200 rounded-xl shadow-lg", "p-2 md:p-10")
+              // "p-2 md:p-10 mb-3 mt-5 md:my-10 rounded-xl w-full shadow-lg bg-base-200"
+            }
+          >
+            <div className="text-xl my-5 md:text-3xl text-center text-primary font-bold">
               {aqiData.city.name}
             </div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-col-reverse flex-wrap justify-evenly md:flex-row">
               {/* Air Conditions */}
-              <div className="flex flex-col p-5 my-10 w-3/5 duration-300">
-                <p className="text-2xl font-bold border-s-4 p-2 text-blue-400 border-blue-400">
+              <div
+                className={clsx(
+                  "flex flex-col my-3 md:w-2/5 gap-2",
+                  "duration-300"
+                )}
+              >
+                <p className="text-xl md:text-2xl font-bold border-s-4 p-2 text-blue-400 border-blue-400">
                   Air Conditions
                 </p>
-                <div className="flex items-end px-2 py-3">
+                <div className="flex items-end md:px-2 md:py-3">
                   <img
                     src={thermometer}
                     alt="temperature"
                     className="w-12 h-12"
                   />
-                  <p className="py-2 text-xl text-neutral font-semibold">
+                  <p className="py-2 text-lg text-neutral font-semibold">
                     {parseFloat(aqiData.iaqi.t?.v).toFixed(2)} °C
                   </p>
-                  {/* <div className="mx-3 border-e-2 h-full"></div> */}
                   <div className="m-3"></div>
                   <img src={wind} alt="wind" className="w-12 h-12" />
-                  <p className="p-2 text-xl text-neutral font-semibold">
+                  <p className="p-2 text-lg text-neutral font-semibold">
                     {parseFloat(aqiData.iaqi.w?.v).toFixed(2)} m/s
                   </p>
                 </div>
-                <p className="text-2xl mt-5 font-bold border-s-4 p-2 text-amber-400 border-amber-400">
+                <p className="text-xl md:text-2xl mt-5 font-bold border-s-4 p-2 text-amber-400 border-amber-400">
                   Pollutants
                 </p>
-                <div className="flex flex-col px-2 py-3 flex-wrap">
+                <div className="flex flex-col md:px-2 md:py-3 flex-wrap">
                   {aqiData.iaqi.pm25?.v && (
                     <div className="flex items-center gap-5">
-                      <img src={pm25} alt="pm25" className="w-12 h-12" />
+                      <img
+                        src={pm25}
+                        alt="pm25"
+                        className="w-8 h-8 md:w-12 md:h-12"
+                      />
                       <Progress
                         value={Math.min(250, aqiData.iaqi.pm25.v)}
                         max={250}
-                        className="bg-neutral-700 w-48"
+                        className="bg-neutral-700 md:w-3/4"
                       />
-                      <p className="py-2 text-xl text-neutral font-semibold">
+                      <p className="py-2 text-neutral md:text-nowrap font-semibold text-sm md:text-md md:w-24 ms-auto w-24">
                         {parseFloat(aqiData.iaqi.pm25?.v).toFixed(2)} µg/m³
                       </p>
                     </div>
                   )}
                   {aqiData.iaqi.pm10?.v && (
                     <div className="flex items-center gap-5">
-                      <img src={pm10} alt="pm10" className="w-12 h-12" />
+                      <img
+                        src={pm10}
+                        alt="pm10"
+                        className="w-8 h-8 md:w-12 md:h-12"
+                      />
                       <Progress
                         value={Math.min(250, aqiData.iaqi.pm10.v)}
                         max={250}
-                        className="bg-neutral-700 w-48"
+                        className="bg-neutral-700 md:w-3/4"
                       />
-                      <p className="py-2 text-xl text-neutral font-semibold">
+                      <p className="py-2 text-neutral md:text-nowrap font-semibold text-sm md:text-md md:w-24 ms-auto w-24">
                         {parseFloat(aqiData.iaqi.pm10?.v).toFixed(2)} µg/m³
                       </p>
                     </div>
@@ -240,40 +277,49 @@ export default function Aqibody() {
                       <img
                         src={monoxide}
                         alt="monoxide"
-                        className="w-12 h-12"
+                        className="w-8 h-8 md:w-12 md:h-12"
                       />
                       <Progress
                         value={aqiData.iaqi.co.v}
                         max={50}
-                        className="bg-neutral-700 w-48"
+                        className="bg-neutral-700 md:w-3/4"
                       />
-                      <p className="py-2 text-xl text-neutral font-semibold">
+                      <p className="py-2 text-neutral md:text-nowrap font-semibold text-sm md:text-md md:w-24 ms-auto w-24">
                         {parseFloat(aqiData.iaqi.co?.v).toFixed(2)} ppm
                       </p>
                     </div>
                   )}
                   {aqiData.iaqi.o3?.v && (
                     <div className="flex items-center gap-5">
-                      <img src={ozone} alt="ozone" className="w-12 h-12" />
+                      <img
+                        src={ozone}
+                        alt="ozone"
+                        className="w-8 h-8 md:w-12 md:h-12"
+                      />
                       <Progress
                         value={aqiData.iaqi.o3.v}
                         max={150}
-                        className="bg-neutral-700 w-48"
+                        className="bg-neutral-700 md:w-3/4"
                       />
-                      <p className="py-2 text-xl text-neutral font-semibold">
+                      <p className="py-2 text-neutral md:text-nowrap font-semibold text-sm md:text-md md:w-24 ms-auto w-24">
                         {parseFloat(aqiData.iaqi.o3?.v).toFixed(2)} ppb
                       </p>
                     </div>
                   )}
                 </div>
               </div>
+
               {/* AQI */}
               <div
-                className={`flex flex-col py-10 px-5 rounded-3xl items-center border-2 border-${
-                  getAQIBracket(aqiData.aqi).bg
-                }-500 duration-300 my-auto lg:w-2/5`}
+                className={clsx(
+                  "flex flex-col items-center",
+                  "my-auto border-2",
+                  `border-${getAQIBracket(aqiData.aqi).bg}-500`,
+                  "md:w-2/5 duration-300",
+                  "p-3 rounded-box"
+                )}
               >
-                <div className="w-32 h-32 mb-10 mx-auto duration-300">
+                <div className="w-32 h-32 mx-auto duration-300">
                   <CircularProgressbar
                     value={aqiData.aqi}
                     maxValue={500}
@@ -289,7 +335,7 @@ export default function Aqibody() {
                 {/* AQI Message */}
                 <div className="w-full max-w-[400px] text-center duration-300">
                   <p
-                    className={`font-bold text-2xl text-${
+                    className={`font-bold text-2xl mb-3 text-${
                       getAQIBracket(aqiData.aqi).bg
                     }-500 duration-300`}
                   >
@@ -309,11 +355,11 @@ export default function Aqibody() {
           />
         )}
 
-        <div className=" p-4 md:p-6 lg:p-8 ">
-          {error && (
+        {error && (
+          <div className=" p-4 md:p-6 lg:p-8 ">
             <div className="text-red-500 text-center mb-4">{error}</div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </>
   );

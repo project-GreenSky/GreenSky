@@ -26,6 +26,10 @@ module.exports = {
         100: "25rem",
         112: "28rem",
         120: "30rem",
+        160: "40rem"
+      },
+      maxWidth: {
+        container: "1000px"
       },
       keyframes: {
         "accordion-down": {
@@ -70,9 +74,9 @@ module.exports = {
           secondary: "#1B4242",
           accent: "#1A3636",
           neutral: "#777",
-          "base-100": "#0f0f0f",
-          "base-200": "#151515",
-          "base-300": "#000",
+          "base-100": "#111312",
+          "base-200": "#171A1A",
+          "base-300": "#151515",
         },
       },
     ],

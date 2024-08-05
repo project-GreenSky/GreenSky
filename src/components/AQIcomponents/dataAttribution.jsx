@@ -4,7 +4,7 @@ import React from "react";
 function Dataattribution({ attribution, time }) {
   return (
     <>
-      <div className="flex justify-between p-5 w-full text-neutral">
+      <div className="flex flex-col md:flex-row justify-between p-5 w-full text-neutral">
         <div>
           <p>Sources</p>
           {attribution.map((attr, index) => (
@@ -20,7 +20,7 @@ function Dataattribution({ attribution, time }) {
             </li>
           ))}
         </div>
-        <p className="text-xs text-green-500 my-auto">Last Updated: {moment(time.s).fromNow()}</p>
+        <p className="text-xs ms-auto my-2 text-green-500 md:my-auto">Last Updated: {moment(time.s).fromNow()}</p>
       </div>
     </>
   );
