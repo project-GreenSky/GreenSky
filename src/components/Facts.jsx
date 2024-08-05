@@ -60,22 +60,17 @@ function Facts() {
       <Slider {...settings}>
         {facts.map((fact, index) => (
           <div key={index} className="p-4">
-            <div className="bg-base-200 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+            <div className=" rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
               <img
                 src={fact.img}
                 alt={fact.title}
                 className="w-full h-80 object-fit"
               />
-              <div className="p-4">
-                <h2 className="text-xl font-bold tracking-wide">
-                  {fact.title}
-                </h2>
-                <p className="mt-2 text-gray-400 font-semibold tracking-wide text-center">
-                  {fact.description}
-                </p>
-                <p className="mt-4 text-gray-500 font-bold tracking-wide text-center">
-                  Source : {fact.name}
-                </p>
+
+              <div className="p-4 bg-gradient-to-br from-[#323232] to-[#121212]">
+                <h2 className="text-xl font-bold tracking-wide">{fact.title}</h2>
+                <p className="mt-2 text-gray-400 font-semibold tracking-wide text-center">{fact.description}</p>
+                <p className="mt-4 text-gray-500 font-bold tracking-wide text-center">Source : {fact.name}</p>
               </div>
             </div>
           </div>

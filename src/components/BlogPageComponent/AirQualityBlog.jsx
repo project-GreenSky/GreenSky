@@ -163,7 +163,7 @@ const AirQualityBlog = () => {
           {blogs.map((blog) => (
             <div
               key={blog.id}
-              className="blog-card"
+              className="blog-card border border-green-400 border-collapse rounded-md"
               onClick={() => handleBlogClick(blog)}
             >
               <img src={blog.image} alt={blog.title} />
