@@ -51,7 +51,7 @@ export default function AboutUs() {
           transition={{ duration: 1 }}
           className="title"
         >
-          About Us - GreenSky
+          About Us
         </motion.h1>
 
         <motion.div
@@ -63,8 +63,8 @@ export default function AboutUs() {
           Urban Air Quality Management Platform
         </motion.div>
 
-        <section className="vision my-2">
-          <h2>Our Vision</h2>
+        <section className="vision mb-5">
+          <h2 className="border border-green-400 rounded">Our Vision</h2>
           <p className="text-gray-300 p-3">
             At GreenSky, we envision a world where urban dwellers breathe clean
             air, live healthier lives, and actively participate in creating
@@ -72,8 +72,8 @@ export default function AboutUs() {
           </p>
         </section>
 
-        <section className="mission my-2">
-          <h2>Our Mission</h2>
+        <section className="mission mb-5">
+          <h2 className="border border-green-400 rounded">Our Mission</h2>
           <ul className="text-gray-300 p-3">
             <li>Empower citizens with real-time air quality data</li>
             <li>Support authorities in making data-driven decisions</li>
@@ -82,8 +82,8 @@ export default function AboutUs() {
           </ul>
         </section>
 
-        <section className="approach my-2">
-          <h2>Our Approach</h2>
+        <section className="approach mb-5">
+          <h2 className="border border-green-400 rounded">Our Approach</h2>
           <div className="feature-grid  text-gray-300">
             {[
               "Real-time data visualization",
@@ -106,8 +106,8 @@ export default function AboutUs() {
           </div>
         </section>
 
-        <section className="challenge my-2">
-          <h2>The Challenge We're Tackling</h2>
+        <section className="challenge mb-5">
+          <h2 className="border border-green-400 rounded">The Challenge We're Tackling</h2>
           <p className="text-gray-300 p-3">
             Urban areas worldwide are grappling with dangerous levels of air
             pollution. We're bridging the gap by developing a comprehensive
@@ -116,8 +116,8 @@ export default function AboutUs() {
           </p>
         </section>
 
-        <section className="team my-2">
-          <h2>Our Team</h2>
+        <section className="team mb-8">
+          <h2 className="border border-green-400 rounded">Our Team</h2>
           <p className="text-gray-300 p-3">
             We are six passionate students from{" "}
             <strong>
@@ -150,8 +150,8 @@ export default function AboutUs() {
           </div>
         </section>
 
-        <section className="impact my-2">
-          <h2>Our Impact</h2>
+        <section className="impact mb-5">
+          <h2 className="border border-green-400 rounded">Our Impact</h2>
           <p className="text-gray-300 p-3">
             Through GreenSky, we aspire to increase awareness, enhance
             decision-making, contribute to healthier urban living, and foster

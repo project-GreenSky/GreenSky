@@ -33,7 +33,7 @@ export default function App() {
 
 function InProgress() {
   return (
-    <div className="h-dvh flex items-center justify-center text-sxl">
+    <div className="h-dvh flex items-center justify-center text-2xl font-bold">
       Coming Soon ...
     </div>
   );
