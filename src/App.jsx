@@ -26,7 +26,7 @@ export default function App() {
         <Route path="/services" element={<InProgress />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      <Footer />
+      <Footer pageState={[page, setPage]}/>
     </BrowserRouter>
   );
 }

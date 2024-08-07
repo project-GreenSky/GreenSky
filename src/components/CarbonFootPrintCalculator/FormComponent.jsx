@@ -49,7 +49,7 @@ const FormComponent = ({ title, fields, onSubmit, loading }) => {
                   handleChange({ target: { name: field.name, value } })
                 }          
               >
-                <SelectTrigger className="my-2">
+                <SelectTrigger className="my-2 bg-base-200">
                   <SelectValue
                     placeholder={`Select ${field.label.toLowerCase()}`}
                   />

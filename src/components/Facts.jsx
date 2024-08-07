@@ -4,16 +4,17 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { facts } from "@/lib/utils";
+import clsx from "clsx";
 
-// function NextArrow(props) {
-//   const { onClick } = props;
-//   return <div className="absolute top-0 left-0" onClick={onClick} />;
-// }
+function NextArrow(props) {
+  const { className, onClick } = props;
+  return <div className={clsx(className, "hidden md:block")} onClick={onClick} />;
+}
 
-// function PrevArrow(props) {
-//   const { onClick } = props;
-//   return <div className="absolute top-0 left-0" onClick={onClick} />;
-// }
+function PrevArrow(props) {
+  const { className, onClick } = props;
+  return <div className={clsx(className, "hidden md:block")} onClick={onClick} />;
+}
 
 /**
  * @type {import('react-slick').Settings}
@@ -28,6 +29,8 @@ const settings = {
   autoplay: true,
   autoplaySpeed: 5000,
   cssEase: "ease-in-out",
+  prevArrow: <PrevArrow />,
+  nextArrow: <NextArrow />,
   responsive: [
     {
       breakpoint: 1024,
@@ -53,7 +56,6 @@ const settings = {
   ],
 };
 
-
 function Facts() {
   return (
     <div className="max-w-xl h-lg mx-auto my-5">
@@ -68,9 +70,15 @@ function Facts() {
               />
 
               <div className="p-4 bg-gradient-to-br from-[#323232] to-[#121212]">
-                <h2 className="text-xl font-bold tracking-wide">{fact.title}</h2>
-                <p className="mt-2 text-gray-400 font-semibold tracking-wide text-center">{fact.description}</p>
-                <p className="mt-4 text-gray-500 font-bold tracking-wide text-center">Source : {fact.name}</p>
+                <h2 className="text-xl font-bold tracking-wide">
+                  {fact.title}
+                </h2>
+                <p className="mt-2 text-gray-400 font-semibold tracking-wide text-center">
+                  {fact.description}
+                </p>
+                <p className="mt-4 text-gray-500 font-bold tracking-wide text-center">
+                  Source : {fact.name}
+                </p>
               </div>
             </div>
           </div>

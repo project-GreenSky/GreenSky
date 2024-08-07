@@ -21,7 +21,7 @@ export default function AboutUs() {
     },
     {
       name: "Rishi Mehto",
-      role: "Front End Developer",
+      role: "Full Stack Web Developer",
       gh_uid: "rishi998",
     },
     {
