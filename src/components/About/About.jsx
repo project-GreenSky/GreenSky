@@ -21,7 +21,7 @@ export default function AboutUs() {
     },
     {
       name: "Rishi Mehto",
-      role: "Front End Developer",
+      role: "Full Stack Web Developer",
       gh_uid: "rishi998",
     },
     {
@@ -107,7 +107,9 @@ export default function AboutUs() {
         </section>
 
         <section className="challenge mb-5">
-          <h2 className="border border-green-400 rounded">The Challenge We're Tackling</h2>
+          <h2 className="border border-green-400 rounded">
+            The Challenge We're Tackling
+          </h2>
           <p className="text-gray-300 p-3">
             Urban areas worldwide are grappling with dangerous levels of air
             pollution. We're bridging the gap by developing a comprehensive
