@@ -17,6 +17,24 @@ import motorbike from "../../assets/motorbike.svg";
 import flight from "../../assets/flight.svg";
 import fuel from "../../assets/fuel.svg";
 import clean from "../../assets/clean.svg";
+import { motion, useInView } from 'framer-motion';
+
+const AnimatedSection = ({ children, className }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {children}
+    </motion.section>
+  );
+};
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -187,7 +205,7 @@ const CarbonFootprintCalculator = () => {
   };
 
   return (
-    <div
+    <AnimatedSection
       // style={{
       //   backgroundImage: `url(${selected.icon})`,
       //   backgroundAttachment: "local",
@@ -233,7 +251,7 @@ const CarbonFootprintCalculator = () => {
         />
       </div>
       {!loading && result && (
-        <Card key={result} className="w-fit ms-auto">
+        <Card key={result} className="w-[100%]">
           <CardHeader>
             <CardTitle className="text-[#2e7d32] font-bold">
               Result: {!!result ? `${result} kg CO2e` : "No result available"}
@@ -249,7 +267,7 @@ const CarbonFootprintCalculator = () => {
           </CardHeader>
         </Card>
       )}
-    </div>
+    </AnimatedSection>
   );
 };
 

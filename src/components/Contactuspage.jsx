@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { motion } from 'framer-motion';
 
 function ContactUsForm() {
   const handleSubmit = (e) => {
@@ -26,11 +27,22 @@ function ContactUsForm() {
     <div className="text-white min-h-screen flex items-center justify-center">
       <div
         className="bg-gradient-to-br from-[#323232] to-[#121212] m-3 p-8 rounded-lg shadow-lg w-full max-w-4xl"
-        style={{ border: "2px solid #ffffffb1", boxShadow: "0 0 1px #fff" }}
+        style={{ border: '2px solid #ffffffb1', boxShadow: '0 0 1px #fff' }}
       >
-        <h2 className="text-2xl rounded-lg font-semibold mb-6 text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-4xl font-semibold mb-1 mt-0 text-center"
+        >
           Contact Us
-        </h2>
+        </motion.h2>
+        <motion.hr
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1}}
+          transition={{ duration: 2 }}
+          className="mt-0 mb-6 ml-[-5px] border-t-4 w-[101.5%] border-green-500"
+        ></motion.hr>
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

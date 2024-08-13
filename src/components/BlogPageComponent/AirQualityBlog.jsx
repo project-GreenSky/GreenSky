@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import "./AirQualityBlog.css";
+import React, { useState } from 'react';
+import './AirQualityBlog.css';
+import { motion } from 'framer-motion';
 
-const BASE_URL = import.meta.env.VITE_BLOG_IMG_BASE_URL
+const BASE_URL = import.meta.env.VITE_BLOG_IMG_BASE_URL;
 
 // Blog list
 const blogs = [
   {
     id: 1,
-    title: "Understanding Air Quality",
+    title: 'Understanding Air Quality',
     image: `${BASE_URL}/greensky/zwvguvn2e4eqfmqmiwy4.jpg`,
     content: `Air quality refers to the condition of the air within our surroundings.
               It is important because it affects our health, the environment, and the
@@ -17,7 +18,7 @@ const blogs = [
   },
   {
     id: 2,
-    title: "Health Impacts of Air Pollution",
+    title: 'Health Impacts of Air Pollution',
     image: `${BASE_URL}/greensky/il0cyc5njo67ce9s2rah.jpg`,
     content: `Exposure to polluted air can have significant health impacts, including
               respiratory and cardiovascular diseases. Long-term exposure can lead to chronic
@@ -28,7 +29,7 @@ const blogs = [
   },
   {
     id: 3,
-    title: "Causes of Air Pollution",
+    title: 'Causes of Air Pollution',
     image: `${BASE_URL}/greensky/nt13xgek8sedafwoooiu.jpg`,
     content: `Air pollution can be caused by various factors, including industrial emissions,
               vehicle exhaust, burning of fossil fuels, and agricultural activities. These
@@ -39,7 +40,7 @@ const blogs = [
   },
   {
     id: 4,
-    title: "Effects of Indoor Air Pollution",
+    title: 'Effects of Indoor Air Pollution',
     image: `${BASE_URL}/greensky/hxwclb2ngcy8esdxgu4v.jpg`,
     content: `Indoor air pollution refers to the contamination of indoor air by pollutants
               such as smoke, dust, mold, and chemicals. It can have adverse effects on
@@ -51,7 +52,7 @@ const blogs = [
   },
   {
     id: 5,
-    title: "Air Quality Index (AQI)",
+    title: 'Air Quality Index (AQI)',
     image: `${BASE_URL}/greensky/vlbta00vpeh5qhdew52i.jpg`,
     content: `The Air Quality Index (AQI) is a measure used to assess and report air quality
               levels. It provides information about the concentration of pollutants in the air
@@ -62,7 +63,7 @@ const blogs = [
   },
   {
     id: 6,
-    title: "Air Quality Monitoring",
+    title: 'Air Quality Monitoring',
     image: `${BASE_URL}/greensky/qsimj90c9dgr65b2ul4w.jpg`,
     content: `Air quality monitoring involves the measurement and analysis of air pollutants
               to assess the quality of the air. Monitoring stations are set up in various
@@ -74,7 +75,7 @@ const blogs = [
   },
   {
     id: 7,
-    title: "Air Quality Regulations",
+    title: 'Air Quality Regulations',
     image: `${BASE_URL}/greensky/t3iht44curndulm38e7e.jpg`,
     content: `Air quality regulations are laws and policies implemented by governments to
               control and reduce air pollution. These regulations set limits on pollutant
@@ -85,7 +86,7 @@ const blogs = [
   },
   {
     id: 8,
-    title: "Air Quality Improvement Strategies",
+    title: 'Air Quality Improvement Strategies',
     image: `${BASE_URL}/greensky/fyibgucuwhjjlz6wiyos.jpg`,
     content: `To improve air quality, various strategies can be implemented at different levels.
               These include reducing emissions from industrial processes and vehicles,
@@ -96,7 +97,7 @@ const blogs = [
   },
   {
     id: 9,
-    title: "Air Quality and Climate Change",
+    title: 'Air Quality and Climate Change',
     image: `${BASE_URL}/greensky/cmfj7vcjjakglktjygn2.jpg`,
     content: `Air quality and climate change are closely interconnected. Many air pollutants,
               such as carbon dioxide, methane, and black carbon, contribute to both air
@@ -107,7 +108,7 @@ const blogs = [
   },
   {
     id: 10,
-    title: "Individual Actions for Better Air Quality",
+    title: 'Individual Actions for Better Air Quality',
     image: `${BASE_URL}/greensky/bo6seap2okeb5ipvedbf.jpg`,
     content: `Individuals can also contribute to better air quality by adopting certain actions.
               These include using public transportation or carpooling, reducing energy
@@ -118,7 +119,7 @@ const blogs = [
   },
   {
     id: 11,
-    title: "Air Quality and Respiratory Health",
+    title: 'Air Quality and Respiratory Health',
     image: `${BASE_URL}/greensky/kjx01xwzyawy3zxskm25.jpg`,
     content: `Air quality plays a crucial role in respiratory health. Poor air quality can
               exacerbate respiratory conditions such as asthma, bronchitis, and allergies.
@@ -129,7 +130,7 @@ const blogs = [
   },
   {
     id: 12,
-    title: "Air Quality and Environmental Impact",
+    title: 'Air Quality and Environmental Impact',
     image: `${BASE_URL}/greensky/ywa9sx6v6tjnswtplcx1.jpg`,
     content: `Air pollution has significant environmental impacts. It can harm ecosystems,
               damage vegetation, and contribute to climate change. Pollutants released into
@@ -154,8 +155,20 @@ const AirQualityBlog = () => {
   return (
     <div className="blog-page">
       <header>
-        <h1>Air Quality Insights</h1>
-        <p>Exploring the importance of clean air for a healthier future</p>
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          Air Quality Insights
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          Exploring the importance of clean air for a healthier future
+        </motion.p>
       </header>
 
       <main>
