@@ -40,7 +40,7 @@ header p {
 }
 
 .blog-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 .blog-card img {
@@ -53,8 +53,7 @@ header p {
   padding: 1rem;
   font-size: 1.2rem;
   text-align: center;
-  /* border: 2px solid #12c25b; */
-
+  margin-top: 0px;
 }
 
 .modal-overlay {
@@ -87,10 +86,9 @@ header p {
   position: absolute;
   top: 2px;
   right: 12px;
-  font-size: 1.5rem;
+  font-size: 2rem;
   background: none;
   border: none;
-  font-weight: bold;
   cursor: pointer;
 }
 

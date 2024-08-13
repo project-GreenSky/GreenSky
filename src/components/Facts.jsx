@@ -5,6 +5,24 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { facts } from "@/lib/utils";
 import clsx from "clsx";
+import { motion, useInView } from 'framer-motion';
+
+const AnimatedSection = ({ children, className }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {children}
+    </motion.section>
+  );
+};
 
 function NextArrow(props) {
   const { className, onClick } = props;
@@ -58,7 +76,7 @@ const settings = {
 
 function Facts() {
   return (
-    <div className="max-w-xl h-lg mx-auto my-5">
+    <AnimatedSection className="max-w-xl h-lg mx-auto my-5">
       <Slider {...settings}>
         {facts.map((fact, index) => (
           <div key={index} className="p-4">
@@ -84,7 +102,7 @@ function Facts() {
           </div>
         ))}
       </Slider>
-    </div>
+    </AnimatedSection>
   );
 }
 
