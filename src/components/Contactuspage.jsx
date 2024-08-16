@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion, useview } from "framer-motion";
 
 function ContactUsForm() {
   const handleSubmit = (e) => {
@@ -27,7 +27,7 @@ function ContactUsForm() {
     <div className="text-white min-h-screen flex items-center justify-center">
       <div
         className="bg-gradient-to-br from-[#323232] to-[#121212] m-3 p-8 rounded-lg shadow-lg w-full max-w-4xl"
-        style={{ border: '2px solid #ffffffb1', boxShadow: '0 0 1px #fff' }}
+        style={{ border: "2px solid #ffffffb1", boxShadow: "0 0 1px #fff" }}
       >
         <motion.h2
           initial={{ opacity: 0, y: -10 }}
@@ -39,7 +39,7 @@ function ContactUsForm() {
         </motion.h2>
         <motion.hr
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1}}
+          animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
           className="mt-0 mb-6 ml-[-5px] border-t-4 w-[101.5%] border-green-500"
         ></motion.hr>
