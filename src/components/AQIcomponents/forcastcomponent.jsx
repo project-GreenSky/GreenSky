@@ -8,6 +8,24 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart";
 import moment from "moment";
+import { motion, useInView } from 'framer-motion';
+
+const AnimatedSection = ({ children, className }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {children}
+    </motion.section>
+  );
+};
 
 const chartConfig = {
   avg: {
@@ -26,7 +44,7 @@ const ForecastComponent = ({ forecast }) => {
   return (
     <>
       {Object.entries(forecast?.daily || {}).map(([key, value]) => (
-        <div
+        <AnimatedSection
           key={key}
           className="md:rounded-xl w-full px-2 py-5 my-2 md:p-10 md:my-5 shadow-lg bg-gradient-to-br from-[#323232] to-[#121212] overflow-hidden"
         >
@@ -58,7 +76,7 @@ const ForecastComponent = ({ forecast }) => {
               <ChartLegend content={<ChartLegendContent />} />
             </LineChart>
           </ChartContainer>
-        </div>
+        </AnimatedSection>
       ))}
     </>
   );

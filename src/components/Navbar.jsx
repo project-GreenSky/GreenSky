@@ -15,12 +15,16 @@ export default function Navbar({ pageState }) {
   return (
     <nav className="bg-white border-gray-200 bg-gradient-to-b from-[#000] to-[#333] ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <Link
+          to="/"
+          onClick={() => setPage("home")}
+          className="flex items-center space-x-3 rtl:space-x-reverse"
+        >
           <img src={icon} alt="icon" className="w-8 h-8" />
           <p className="text-2xl text-green-500 font-bold font-Playwrite">
             GreenSky
           </p>
-        </a>
+        </Link>
         <button
           onClick={toggleMenu}
           type="button"

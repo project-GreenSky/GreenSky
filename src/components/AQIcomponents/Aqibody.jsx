@@ -1,20 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import "tailwindcss/tailwind.css";
-import wind from "../../assets/wind.svg";
-import thermometer from "../../assets/thermometer.svg";
-import pm25 from "../../assets/pm25.svg";
-import pm10 from "../../assets/pm10.svg";
-import ozone from "../../assets/ozone.svg";
-import monoxide from "../../assets/monoxide.svg";
-import ForecastComponent from "./forcastcomponent";
-import Dataattribution from "./dataAttribution";
-import { getAQIBracket } from "@/lib/utils";
-import { FaLocationDot, FaRoadBarrier } from "react-icons/fa6";
-import { Progress } from "../ui/progress";
-import clsx from "clsx";
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import 'tailwindcss/tailwind.css';
+import wind from '../../assets/wind.svg';
+import thermometer from '../../assets/thermometer.svg';
+import pm25 from '../../assets/pm25.svg';
+import pm10 from '../../assets/pm10.svg';
+import ozone from '../../assets/ozone.svg';
+import monoxide from '../../assets/monoxide.svg';
+import ForecastComponent from './forcastcomponent';
+import Dataattribution from './dataAttribution';
+import { getAQIBracket } from '@/lib/utils';
+import { FaLocationDot, FaRoadBarrier } from 'react-icons/fa6';
+import { Progress } from '../ui/progress';
+import clsx from 'clsx';
+import { motion, useInView } from 'framer-motion';
+
+const AnimatedSection = ({ children, className }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5 }}
+      className={className}
+    >
+      {children}
+    </motion.section>
+  );
+};
 
 const WAQI_KEY = import.meta.env.VITE_WAQI_KEY;
 
@@ -23,10 +41,10 @@ const fetchAQIData = async (city) =>
     .get(`https://api.waqi.info/feed/${city}/?token=${WAQI_KEY}`)
     .then((res) => {
       let data = res.data;
-      if (data.status === "error") return Promise.reject(data.message);
+      if (data.status === 'error') return Promise.reject(data.message);
       return Promise.resolve(data.data);
     })
-    .catch((err) => Promise.reject(err?.response?.message || "Network Error"));
+    .catch((err) => Promise.reject(err?.response?.message || 'Network Error'));
 
 /**
  * @type {NodeJS.Timeout}
@@ -39,9 +57,9 @@ let timeout;
 let abortController;
 
 export default function Aqibody() {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState('');
   const [aqiData, setAQIData] = useState(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
   const [suggestion, setSuggestion] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -68,7 +86,7 @@ export default function Aqibody() {
           signal: abortController.signal,
         })
         .then((res) => {
-          if (res.data.status === "ok") setSuggestion(res.data.data);
+          if (res.data.status === 'ok') setSuggestion(res.data.data);
         })
         .catch(console.log);
     }, 300);
@@ -80,9 +98,9 @@ export default function Aqibody() {
     try {
       const data = await fetchAQIData(city);
       setAQIData(data);
-      setError("");
+      setError('');
     } catch (err) {
-      setError(err || "Failed to fetch AQI data. Please try again.");
+      setError(err || 'Failed to fetch AQI data. Please try again.');
       setAQIData(null);
     } finally {
       setLoading(false);
@@ -105,37 +123,42 @@ export default function Aqibody() {
   const handleSuggestionClick = (uid) => {
     setOpen(false);
     fetchData(`@${uid}`);
-    setCity("");
+    setCity('');
     setSuggestion(null);
   };
 
   useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
+    window.addEventListener('click', handleClickOutside);
 
-    return () => window.removeEventListener("click", handleClickOutside);
+    return () => window.removeEventListener('click', handleClickOutside);
   }, []);
 
   useEffect(() => {
-    fetchData("here");
+    fetchData('here');
   }, []);
 
   return (
     <>
       <div
         className={clsx(
-          "flex flex-col items-center",
-          "min-h-dvh max-w-container",
-          "mx-auto px-2"
+          'flex flex-col items-center',
+          'min-h-dvh max-w-container',
+          'mx-auto px-2'
         )}
       >
-        <div className="w-full px-2 max-w-96">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="w-full px-2 max-w-96"
+        >
           <label
             ref={inputRef}
             className={clsx(
-              "input input-bordered input-primary",
-              "relative flex items-center gap-2",
-              "bg-base-200 rounded-box",
-              "my-5 w-full md:my-10"
+              'input input-bordered input-primary',
+              'relative flex items-center gap-2',
+              'bg-base-200 rounded-box',
+              'my-5 w-full md:my-10'
             )}
             onFocus={() => {
               if (!open && suggestion !== null) setOpen(true);
@@ -154,13 +177,13 @@ export default function Aqibody() {
             <div
               ref={resultRef}
               className={clsx(
-                "absolute top-12 left-0",
-                "flex flex-col",
-                "bg-base-200 shadow-xl shadow-neutral-800",
-                "px-1 mt-1 w-full max-w-96 rounded-lg",
-                open && "h-48 py-3",
-                !open && "h-0 p-0",
-                "overflow-y-auto duration-300"
+                'absolute top-12 left-0',
+                'flex flex-col',
+                'bg-base-200 shadow-xl shadow-neutral-800',
+                'px-1 mt-1 w-full max-w-96 rounded-lg',
+                open && 'h-48 py-3',
+                !open && 'h-0 p-0',
+                'overflow-y-auto duration-300'
               )}
             >
               {open && !suggestion && (
@@ -175,7 +198,7 @@ export default function Aqibody() {
                     onClick={() => handleSuggestionClick(s.uid)}
                   >
                     <span className="w-10/12">{s.station.name}</span>
-                    {s.aqi !== "-" && (
+                    {s.aqi !== '-' && (
                       <span
                         style={{ color: getAQIBracket(parseInt(s.aqi))?.color }}
                         className="text-xs"
@@ -193,15 +216,19 @@ export default function Aqibody() {
               )}
             </div>
           </label>
-        </div>
+        </motion.div>
 
         {loading && (
           <div className="loading loading-dots loading-lg text-neutral my-10"></div>
         )}
         {aqiData && (
-          <div
+          <AnimatedSection
             className={
-              clsx("w-full", "bg-gradient-to-br from-[#323232] to-[#121212] rounded-xl shadow-lg", "p-2 md:p-10")
+              clsx(
+                'w-full',
+                'bg-gradient-to-br from-[#323232] to-[#121212] rounded-xl shadow-lg',
+                'p-2 md:p-10'
+              )
               // "p-2 md:p-10 mb-3 mt-5 md:my-10 rounded-xl w-full shadow-lg bg-base-200"
             }
           >
@@ -212,8 +239,8 @@ export default function Aqibody() {
               {/* Air Conditions */}
               <div
                 className={clsx(
-                  "flex flex-col my-3 md:w-2/5 gap-2",
-                  "duration-300"
+                  'flex flex-col my-3 md:w-2/5 gap-2',
+                  'duration-300'
                 )}
               >
                 <p className="text-xl md:text-2xl font-bold border-s-4 p-2 text-blue-400 border-blue-400">
@@ -312,11 +339,11 @@ export default function Aqibody() {
               {/* AQI */}
               <div
                 className={clsx(
-                  "flex flex-col items-center",
-                  "my-auto border-2",
+                  'flex flex-col items-center',
+                  'my-auto border-2',
                   `border-${getAQIBracket(aqiData.aqi).bg}-500`,
-                  "md:w-2/5 duration-300",
-                  "p-3 rounded-box"
+                  'md:w-2/5 duration-300',
+                  'p-3 rounded-box'
                 )}
               >
                 <div className="w-32 h-32 mx-auto duration-300">
@@ -327,7 +354,7 @@ export default function Aqibody() {
                     styles={buildStyles({
                       textColor: getAQIBracket(aqiData.aqi).color,
                       pathColor: getAQIBracket(aqiData.aqi).color,
-                      trailColor: "#555",
+                      trailColor: '#555',
                     })}
                   />
                 </div>
@@ -345,7 +372,7 @@ export default function Aqibody() {
                 </div>
               </div>
             </div>
-          </div>
+          </AnimatedSection>
         )}
         {aqiData && <ForecastComponent forecast={aqiData?.forecast} />}
         {aqiData && (

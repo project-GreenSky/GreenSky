@@ -8,16 +8,23 @@ import {
 import icon from "../assets/icon.png";
 import { Link } from "react-router-dom";
 
-export default function Footer() {
+export default function Footer({ pageState }) {
+  const [page, setPage] = pageState;
+
   return (
     <footer className="bg-base-300 text-neutral-400">
       <div className="w-full justify-between flex-wrap flex p-4 my-4 md:w-10/12 mx-auto gap-4">
-        <a href="" className="flex gap-3 items-center">
+        <Link
+          to="/"
+          href=""
+          className="flex gap-3 items-center"
+          onClick={() => setPage("home")}
+        >
           <img src={icon} alt="icon" className="w-8 h-8" />
           <p className="text-2xl text-green-500 font-bold font-Playwrite">
             GreenSky
           </p>
-        </a>
+        </Link>
         <div className="flex flex-wrap grow justify-evenly gap-5">
           <div>
             <div className=" w-fit text-neutral-300 border-b-2 mb-2 font-medium border-green-500 pr-5">
@@ -25,13 +32,14 @@ export default function Footer() {
             </div>
             <ul className="flex flex-row gap-3 md:flex-col md:gap-0">
               <li>
-                <Link to="/" className="hover:text-neutral-200 duration-300">
+                <Link to="/" onClick={()=>setPage("home")} className="hover:text-neutral-200 duration-300">
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   to="/about"
+                  onClick={()=>setPage("about")}
                   className="hover:text-neutral-200 duration-300"
                 >
                   About
@@ -40,6 +48,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/contact"
+                  onClick={()=>setPage("contact")}
                   className="hover:text-neutral-200 duration-300"
                 >
                   Contact
@@ -55,6 +64,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/blog"
+                  onClick={()=>setPage("blog")}
                   className="hover:text-neutral-200 duration-300"
                 >
                   Blogs
@@ -63,6 +73,7 @@ export default function Footer() {
               <li>
                 <Link
                   to="/services"
+                  onClick={()=>setPage("services")}
                   className="hover:text-neutral-200 duration-300"
                 >
                   Services
